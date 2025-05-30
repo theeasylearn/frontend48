@@ -5,3 +5,5 @@ Intellsense for css
 Live Server - Ritwick day
 notepad++ key 
 view in browser Kopte ho 
+tab color 
+file extension

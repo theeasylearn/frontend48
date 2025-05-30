@@ -7,5 +7,6 @@
 Less reliable 
 1) https://www.perplexity.ai
 
+
 Image Generate 
 3) ideogram.ai
