@@ -2,8 +2,8 @@
 2) create your resume using only html tag.
 https://images.template.net/wp-content/uploads/2018/11/Free-Basic-Resume-Template2.jpg
 
-3) create forgot password page. 
-4) create change password page 
+3) create forgot password page using vertical form. 
+4) create change password page using horizontal form  
 
 5) website for recipe in gujarati language (use only html 4)
 

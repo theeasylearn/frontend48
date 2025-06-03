@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- horizontal form -->
+    <form action="success.html" method="post">
+        <table align="center" cellpadding="10" border="1" width="60%" cellspacing="5">
+            <tr>
+                <td colspan="2" align="center">
+                    <h3>Search Bus</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="source">From</label>
+                </td>
+                <td>
+                    <input type="text" name="source" id="source" required />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="destination">To</label>
+                </td>
+                <td>
+                    <input type="text" name="destination" id="destination" required />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="journey_date">
+                        Select journey date
+                    </label>
+                </td>
+                <td>
+                    <input type="date" id="journey_date" name="journey_date" required />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="seats">Seats</label>
+                </td>
+                <td>
+                    <select name="seats" id="seats" required>
+                        <option value="">Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="bustype">Select type</label>
+                </td>
+                <td>
+                    <label for="nonac">
+                        <input id="nonac" type="radio" name="bustype" value="1" /> non AC
+                    </label>
+                    <label for="ac">
+                        <input id="ac" type="radio" name="bustype" value="2" /> AC
+                    </label>
+                    <label for="sleeper">
+                        <input id="sleeper" type="radio" name="bustype" value="3" /> Sleeper
+                    </label>
+                    <label for="ac_sleeper">
+                        <input id="ac_sleeper" type="radio" name="bustype" value="4" /> AC Sleeper
+                    </label>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
