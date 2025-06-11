@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>min, max, pattern properties in input tags </h1>
+    <form action="">
+        <table>
+            <tr>
+                <td>Monthly Income</td>
+                <td>
+                    <input type="number" min="0" max="1250000000" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Next foreign trip date</td>
+                <td>
+                    <input type="date" min="2025-06-11" max="2025-12-31" required />
+                </td>
+            </tr>
+            <tr>
+                <td>PAN card</td>
+                <td>
+                    <input type="text" pattern="
+                    [A-Za-z]{5}[0-9]{4}[A-Za-z]{1}" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Aadhar card No</td>
+                <td>
+                    <input type="text" pattern="[0-9]{12}" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Credit card no</td>
+                <td>
+                    <input type="text" pattern="[0-9]{16}" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Driving License No</td>
+                <td>
+                    <input type="text" pattern="" required />
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
