@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        * 
+        {
+            margin: 0px;
+            letter-spacing: 1px;
+            padding: 0px;
+            /* include border inside height & width */
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        /* id selector style */
+        #site-header 
+        {
+            display: flex;
+            /* distribute space between children horizontally work only if display is flex */
+            justify-content: space-between;
+            background-color: chocolate;
+        }
+
+        #menu 
+        {
+            display: flex;
+            list-style-type: none;
+            gap: 20px;
+            /* vertical alignment work only if display is flex */
+            align-items: center;
+        }
+
+        /* class selector style */
+        .menu-item 
+        {
+            background-color: brown;
+            color:white;
+            border: 1px solid white;
+            padding: 10px;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="site-header">
+        <img src="images/icon.png" />
+        <ul id="menu">
+            <li><a class="menu-item" href="#">Home</a></li>
+            <li><a class="menu-item" href="#">About us</a></li>
+            <li><a class="menu-item" href="#">Products</a></li>
+            <li><a class="menu-item" href="#">Services</a></li>
+            <li><a class="menu-item" href="#">Contact us</a></li>
+        </ul>
+    </header>
+    <section>
+        <header>
+            About the easylearn academy
+        </header>
+    </section>
+    <footer>
+        <div>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact us</a></li>
+            </ul>
+        </div>
+        <div>
+            the easylearn academy
+            105, eva surbhi, opp aksharwadi temple <br/>
+            waghwadi road, Bhavnagar - 364001
+        </div>
+        <div>
+             <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact us</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>
