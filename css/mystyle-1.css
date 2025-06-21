@@ -1,0 +1,16 @@
+*
+{
+    margin: 0px;
+    padding: 0px;
+    letter-spacing: 1px;
+    box-sizing: border-box;
+}
+body 
+{
+    background-color: aliceblue;
+}
+.profile {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+}
