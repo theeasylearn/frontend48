@@ -26,24 +26,19 @@
         }
 
         /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
-        @media (min-width: 320px) and (max-width: 480px) {
+        @media (min-width: 320px) and (max-width: 767px) {
 
             /* code in this block will be applied only if device width>320 and <480 */
             #site {
                 grid-template-columns: 100%;
                 grid-template-rows: 50px 50px auto auto 50px;
-                 grid-template-areas: 
-                 "site_header"
-                 "site_nav"
-                 "main"
-                 "sidebar"
-                 "site_footer";
+                grid-template-areas:
+                    "site_header"
+                    "site_nav"
+                    "main"
+                    "sidebar"
+                    "site_footer";
             }
-        }
-
-        /* ##Device = Low Resolution Tablets,  ##Screen = B/w 481px to 767px */
-        @media (min-width: 481px) and (max-width: 767px) {
-            /* code in this block will be applied only if device width>481 and <767 */
         }
 
         /* ##Device = Tablets, Ipads (portrait) ##Screen = B/w 768px to 1024px */
@@ -56,22 +51,73 @@
 
             /* code in this block will be applied only if device width>1025 and <1280 */
             #site {
-                grid-template-columns: 20% 60% 20%;
-                grid-template-rows: 50px auto 50px;
-                grid-template-areas: 
-                "site_header site_header site_header"
-                "site_nav main sidebar"
-                "site_footer site_footer site_footer";
+                grid-template-columns: 30% 70%;
+                grid-template-rows: 50px auto auto 50px;
+                grid-template-areas:
+                    "site_header site_header"
+                    "site_nav main"
+                    "site_nav sidebar"
+                    "site_footer site_footer";
             }
         }
 
         /* ##Device = Desktops ##Screen = 1281px to higher resolution desktop */
         @media (min-width: 1281px) {
+
             /* code in this block will be applied only if device width>1281 */
+            #site {
+                grid-template-columns: 20% 60% 20%;
+                grid-template-rows: 100px auto 50px;
+                grid-template-areas:
+                    "site_header site_header site_header"
+                    "site_nav main sidebar"
+                    "site_footer site_footer site_footer";
+            }
         }
 
         #site_header {
             grid-area: site_header;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #AF3E3E;
+            color: #EAEBD0;
+        }
+
+        #site_header>span {
+            display: flex;
+            align-items: center;
+        }
+
+        #site_header>ul {
+            display: flex;
+            list-style-type: none;
+            margin-right: 20px;
+            gap: 10px;
+        }
+
+        #site_header>ul>li>a:link,
+        #site_header>ul>li>a:visited {
+            display: inline-block;
+            width: 160px !important;
+            height: 40px !important;
+            padding: 10px 15px;
+            text-decoration: none;
+            text-transform: uppercase;
+            color: #AF3E3E;
+            background-color: #EAEBD0;
+            border-top-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            text-align: center;
+        }
+
+        #site_header>ul>li>a:hover {
+            font-size: large;
+            background-color: white;
+            border-top-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 20px;
         }
 
         #site_nav {
@@ -94,7 +140,19 @@
 
 <body>
     <div id="site">
-        <div id="site_header">Site Header</div>
+        <div id="site_header">
+            <span>
+                <img src="images/icon.png" alt="" />
+                <h2>THE EASYLEARN</h2>
+            </span>
+            <ul>
+                <li><a href="1_basic.html">Home</a></li>
+                <li><a href="2_basic.html">About us</a></li>
+                <li><a href="3_selectors.html">Products</a></li>
+                <li><a href="4_selectors.html">Services</a></li>
+                <li><a href="5_inline_css.html">Contact us</a></li>
+            </ul>
+        </div>
         <div id="site_nav">Navigation</div>
         <div id="main">Main</div>
         <div id="sidebar">Sidebar</div>
