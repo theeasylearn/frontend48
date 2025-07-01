@@ -22,7 +22,10 @@
         #site {
             display: grid;
             height: 100vh;
-            border: 1px solid red;
+        }
+
+        #mobile_menu {
+            display: none;
         }
 
         /*  ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
@@ -31,13 +34,14 @@
             /* code in this block will be applied only if device width>320 and <480 */
             #site {
                 grid-template-columns: 100%;
-                grid-template-rows: 50px 50px auto auto 50px;
+                grid-template-rows: 60px 50px auto auto 50px;
                 grid-template-areas:
                     "site_header"
                     "site_nav"
                     "main"
                     "sidebar"
                     "site_footer";
+                overflow-y: auto;
             }
         }
 
@@ -82,6 +86,17 @@
             align-items: center;
             background-color: #AF3E3E;
             color: #EAEBD0;
+        }
+
+        @media (max-width: 1150px) {
+            #desktop-menu {
+                display: none !important;
+            }
+
+            #mobile_menu {
+                display: block !important;
+                margin-right: 10px;
+            }
         }
 
         #site_header>span {
@@ -145,19 +160,27 @@
                 <img src="images/icon.png" alt="" />
                 <h2>THE EASYLEARN</h2>
             </span>
-            <ul>
+            <ul id="desktop-menu">
                 <li><a href="1_basic.html">Home</a></li>
                 <li><a href="2_basic.html">About us</a></li>
                 <li><a href="3_selectors.html">Products</a></li>
                 <li><a href="4_selectors.html">Services</a></li>
                 <li><a href="5_inline_css.html">Contact us</a></li>
             </ul>
+            <img id="mobile_menu" src="images/menu.png" height="48px" onclick="menu_button_click();" />
         </div>
         <div id="site_nav">Navigation</div>
         <div id="main">Main</div>
         <div id="sidebar">Sidebar</div>
         <div id="site_footer">Footer</div>
     </div>
+
+    <script>
+        function menu_button_click()
+        {
+            alert('button clicked....');
+        }
+    </script>
 </body>
 
 </html>
