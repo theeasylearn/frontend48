@@ -150,6 +150,19 @@
         #site_footer {
             grid-area: site_footer;
         }
+
+        #mobile_menu_div {
+            position: absolute;
+            top: 50px;
+            left: 0px;
+            background-color: antiquewhite;
+            width: 99.5%;
+        }
+        #mobile_menu_div>ul 
+        {
+            line-height: 150%;
+            padding-left:10px;
+        }
     </style>
 </head>
 
@@ -169,16 +182,34 @@
             </ul>
             <img id="mobile_menu" src="images/menu.png" height="48px" onclick="menu_button_click();" />
         </div>
+
         <div id="site_nav">Navigation</div>
         <div id="main">Main</div>
         <div id="sidebar">Sidebar</div>
         <div id="site_footer">Footer</div>
     </div>
-
+    <div id="mobile_menu_div">
+        <ul>
+            <li><a href="1_basic.html">Home</a></li>
+            <li><a href="2_basic.html">About us</a></li>
+            <li><a href="3_selectors.html">Products</a></li>
+            <li><a href="4_selectors.html">Services</a></li>
+            <li><a href="5_inline_css.html">Contact us</a></li>
+        </ul>
+    </div>
     <script>
-        function menu_button_click()
-        {
-            alert('button clicked....');
+        var isMenuVisible = false;
+        function menu_button_click() {
+            if (isMenuVisible === true) {
+                //alert('Menu is visible, lets hide it');
+                isMenuVisible = false;
+                document.getElementById('mobile_menu_div').style = "display:block";
+            }
+            else {
+                //alert('Menu is hidden, lets show it');
+                isMenuVisible = true;
+                document.getElementById('mobile_menu_div').style = "display:none";
+            }
         }
     </script>
 </body>
