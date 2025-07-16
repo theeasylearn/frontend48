@@ -29,9 +29,15 @@ display total 6 products.
 
     display 24 such Destinations.
 
-4) create vertical form to open account 
+4) create vertical form to open bank account 
 
-5) create horizontal form for change password 
+5) create horizontal form for forgot password 
+
+6) grid form checkout for online shoping application
+
+
 
 6) create non responsive horizontal menu with dark background & light text color (like amazon)
+
+
 
