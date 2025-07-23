@@ -4,5 +4,39 @@
     2) https://www.kajkarate.com
 
 3) findout templates on interest 
-    https://wdtjackie.wpengine.com
-    
+4) download premium templates using httrack
+5) make list of pages in website 
+    Home
+        Slider 
+            1) important about Karate Training
+            2) training center 
+            3) Achievements 
+            4) Specilities 
+        Introduction 
+        Our Services 
+        our instructor 
+        our clases
+        Milestone 
+        Customer Testimonials 
+        Footer  
+    About us 
+        https://www.kajkarate.com/about-academy
+    Services 
+        Service Name 
+        Service Photo 
+    Service Detail 
+    Programs
+    https://mmatigers.com/aga-program.php?
+    Training Center
+        
+    Events
+        Seminar 
+        Camp
+        tournaments
+    Instructor
+        https://www.kajkarate.com/instructors
+    Gallary
+        Photo 
+        Videos
+    Contact us 
+
