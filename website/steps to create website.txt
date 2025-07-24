@@ -8,14 +8,14 @@
 5) make list of pages in website 
     Home
         Slider 
-            1) important about Karate Training
+            1) importance about Karate Training
             2) training center 
             3) Achievements 
             4) Specilities 
         Introduction 
         Our Services 
         our instructor 
-        our clases
+        our classes
         Milestone 
         Customer Testimonials 
         Footer  
