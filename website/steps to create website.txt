@@ -40,3 +40,4 @@
         Videos
     Contact us 
 
+6) copy download theme into website folder
