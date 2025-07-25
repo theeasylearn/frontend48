@@ -26,9 +26,7 @@
         Service Photo 
     Service Detail 
     Programs
-    https://mmatigers.com/aga-program.php?
-    Training Center
-        
+    https://mmatigers.com/aga-program.php?    
     Events
         Seminar 
         Camp
