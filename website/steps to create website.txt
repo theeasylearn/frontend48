@@ -11,7 +11,6 @@
             1) importance about Karate Training
             2) training center 
             3) Achievements 
-            4) Specilities 
         Introduction 
         Our Services 
         Our instructor 
