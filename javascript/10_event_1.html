@@ -20,24 +20,28 @@
                     </div>
                     <div class="card-body">
 
-                        <form >
+                        <form>
                             <div class="mb-3">
                                 <label for="amount" class="form-label">Principal Amount</label>
                                 <input type="number" class="form-control" id="amount" placeholder="Enter amount"
                                     required>
+                                <div id="amount_error"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="rate" class="form-label">Interest Rate (%)</label>
                                 <input type="number" class="form-control" id="rate" placeholder="Enter annual rate"
                                     required>
+                                <div id="rate_error"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="year" class="form-label">Time (years)</label>
                                 <input type="number" class="form-control" id="year" placeholder="Enter time in years"
                                     required>
+                                <div id="year_error"></div>
                             </div>
                             <div class="mb-3">
-                                <button onclick="calculateResult();" type="button" class="btn btn-success w-100">Calculate Interest</button>
+                                <button onclick="calculateResult();" type="button"
+                                    class="btn btn-success w-100">Calculate Interest</button>
                             </div>
                         </form>
 
@@ -51,9 +55,44 @@
     </div>
     <script>
         //create function 2nd method
-        let calculateResult = function(){
-            alert('form submitted');
+        let calculateResult = function () {
+            // alert('form submitted');
+            let amount = document.getElementById('amount').value;
+            let rate = document.getElementById('rate').value;
+            let year = document.getElementById('year').value;
+            console.log(amount, rate, year);
+            let isValidInput = true;
+            if (amount === "") {
+                document.getElementById('amount_error').innerHTML = 'amount can not be blank';
+                document.getElementById('amount_error').className = 'text-danger';
+                isValidInput = false;
+            }
+            if (rate === "") {
+                document.getElementById('rate_error').innerHTML = 'rate can not be blank';
+                document.getElementById('rate_error').className = 'text-danger';
+                isValidInput = false;
+            }
+            if (year === "") {
+                document.getElementById('year_error').innerHTML = 'year can not be blank';
+                document.getElementById('year_error').className = 'text-danger';
+                isValidInput = false;
+            }
+
+            if(isValidInput === true)
+            {
+                //convert into into integer 
+                amount = parseInt(amount);
+                rate = parseInt(rate);
+                year = parseInt(year);
+
+                //calculate interest
+                let interest = (amount * rate * year) / 100;
+                document.getElementById('result').innerHTML = interest;
+                document.getElementById('result').style = 'display:block';
+            }
         }
+
+
     </script>
 </body>
 
