@@ -3,3 +3,7 @@
 
 2) write a program to display button (not submit button) when user click on accept language from user (gujarati, hindi, tamli, marathi, punjabi)
 then display message in his language. 
+
+
+3) develop EMI calculator (withtout using submit button)
+4) develop SIP calculator (with using submit button & arrow functions)
