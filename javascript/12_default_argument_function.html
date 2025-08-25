@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Volume Calculator</title>
+    <!-- Bootstrap 5 CSS via jsDelivr CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <span class="navbar-brand">Volume Calculator</span>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="h4 mb-4">Compute Volume (l × w × d)</h1>
+
+                        <form id="volume-form" class="needs-validation" onsubmit="return calculate();">
+                            <div class="mb-3">
+                                <label for="length" class="form-label">Length (l)</label>
+                                <input type="number" class="form-control" id="length" placeholder="Enter length" min="0"
+                                    step="any" required>
+                                <div class="invalid-feedback">Please enter a valid length.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="width" class="form-label">Width (w, default 1)</label>
+                                <input type="number" class="form-control" id="width"
+                                    placeholder="Defaults to 1 if empty" min="0" step="any">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="depth" class="form-label">Depth (d, default 1)</label>
+                                <input type="number" class="form-control" id="depth"
+                                    placeholder="Defaults to 1 if empty" min="0" step="any">
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" id="calc-btn" class="btn btn-primary">Calculate Volume</button>
+                                <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                            </div>
+                        </form>
+
+                        <hr class="my-4">
+
+                        <div class="alert alert-info mb-0" role="alert">
+                            <strong>Result:</strong> <span id="result">—</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap 5 JS bundle (with Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // Given function
+        //formal arguments
+        let getVolume = function (l, w = 1, d = 1) {
+            let volume = l * w * d;
+            l = w = d = 0; //change in formal arguments (it does not effect actual arguments)
+             console.log(l,w,d);
+            return volume;
+        };
+
+        //multiline arrow function
+        let calculate = () => {
+            //create 3 variable 
+            let length = document.getElementById('length').value;
+            let width = document.getElementById('width').value;
+            let depth = document.getElementById('depth').value;
+            console.log(length, width, depth);
+
+            //actual arguments
+            let volume = getVolume(length, width, depth);
+            // console.log(volume);
+            document.getElementById('result').innerHTML = `volume generated using  3 argument ${volume} <br/> `
+            volume = getVolume(length, width);
+            document.getElementById('result').innerHTML += `volume generated using  2 argument ${volume} <br/>`
+
+            volume = getVolume(length);
+            document.getElementById('result').innerHTML += `volume generated using  1 argument ${volume}`
+            console.log(length, width, depth);
+            return false; //required
+
+        }
+    </script>
+</body>
+
+</html>
