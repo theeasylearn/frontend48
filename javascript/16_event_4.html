@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            box-sizing: border-box;
+            border: 1px solid black;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: xx-large;
+            color: lime;
+        }
+
+        #one {
+            width: 400px;
+            height: 400px;
+            background-color: aliceblue;
+        }
+
+        #two {
+            width: 300px;
+            height: 300px;
+            background-color: antiquewhite;
+        }
+
+        #three {
+            width: 200px;
+            height: 200px;
+            background-color: rebeccapurple
+        }
+
+        #four {
+            width: 100px;
+            height: 100px;
+            background-color: yellow
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" id="one">1
+        <div class="box" id="two">2
+            <div class="box" id="three">3
+                <div class="box" id="four">4</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var boxes = document.getElementsByClassName('box');
+        console.log(boxes);
+        for (let index = 0; index < boxes.length; index++) {
+            boxes[index].addEventListener('click', function () {
+                alert(this.innerHTML);
+            }, true);
+        }
+
+    </script>
+</body>
+
+</html>
