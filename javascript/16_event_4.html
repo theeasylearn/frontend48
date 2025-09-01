@@ -40,6 +40,23 @@
             height: 100px;
             background-color: yellow
         }
+
+        /* css class  */
+        .fade-out {
+            animation: fadeOut var(--fade-duration, 2s) ease forwards;
+        }
+
+        /* Keyframes */
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
     </style>
 </head>
 
@@ -57,8 +74,10 @@
         console.log(boxes);
         for (let index = 0; index < boxes.length; index++) {
             boxes[index].addEventListener('click', function () {
-                alert(this.innerHTML);
-            }, true);
+                //alert(this.innerHTML);
+                boxes[index].style.setProperty('--fade-duration', '3s'); // e.g., 3 seconds
+                boxes[index].classList.add('fade-out');
+            }, false); //true bubble phase
         }
 
     </script>

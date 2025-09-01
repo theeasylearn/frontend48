@@ -14,3 +14,8 @@ then display message in his language.
     reset game when user press new game button.
 
 6) futher modify same example. and develop so player can play against computer 
+
+7) create object using 1st technique to store credit card detail & display it.
+
+8) create template using 2nd technique to store data about Movie. store 
+    Name,generation, duration, star cast, ticket price 
