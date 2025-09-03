@@ -175,6 +175,11 @@
             background-color: lightblue;
             padding: 10px;
         }
+
+        input {
+            padding: 10px;
+            font-size: 20px;
+        }
     </style>
 </head>
 
@@ -186,10 +191,10 @@
                 <input type="text" id="name" required placeholder="Name" />
             </div>
             <div>
-                <input type="number" id="price" required placeholder="Price" />
+                <input type="number" id="price" required placeholder="Price" oninput="calculateTotal();" />
             </div>
             <div>
-                <input type="number" id="quantity" required placeholder="Quantity" />
+                <input type="number" id="quantity" required placeholder="Quantity" oninput="calculateTotal();" />
             </div>
             <div>
                 <input type="number" id="total" required placeholder="Total" value="1000" readonly />
@@ -214,8 +219,19 @@
     </table>
     <script>
         //global variable
-
-
+        function calculateTotal() {
+            //alert('hello');
+            let price = document.getElementById('price').value;
+            let quantity = document.getElementById('quantity').value;
+            console.log(price, quantity);
+            if (price != '' && quantity != '') {
+                price = parseInt(price);
+                quantity = parseInt(quantity);
+                let itemTotal = price * quantity;
+                console.log(itemTotal);
+                document.getElementById('total').value = itemTotal;
+            }
+        }
         function InsertItem() {
             var srno = 1;
             function BillItem(name, price, quantity) {
@@ -239,7 +255,7 @@
             var name = document.getElementById('name').value;
             var price = document.getElementById('price').value;
             var quantity = document.getElementById('quantity').value;
-            var b1 = new BillItem(name,price,quantity);
+            var b1 = new BillItem(name, price, quantity);
             b1.addRow();
             document.getElementById('name').value = '';
             document.getElementById('price').value = '';

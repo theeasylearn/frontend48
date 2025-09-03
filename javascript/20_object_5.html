@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* ===== Bill Table — 2025 design ===== */
+        :root {
+            --bg: #ffffff;
+            --fg: #0f172a;
+            /* slate-900 */
+            --muted: #64748b;
+            /* slate-500 */
+            --card: #f8fafc;
+            /* slate-50 */
+            --border: #e2e8f0;
+            /* slate-200 */
+            --accent: #2563eb;
+            /* blue-600 */
+            --accent-weak: #dbeafe;
+            /* blue-100 */
+            --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0b1220;
+                --fg: #e5e7eb;
+                --muted: #94a3b8;
+                --card: #0f172a;
+                --border: #1f2a3b;
+                --accent: #60a5fa;
+                --accent-weak: #0b2a55;
+                --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+            }
+        }
+
+        /* Scope styles to ONLY the table with <tbody id="bill"> */
+        table:has(> tbody#bill) {
+            width: min(900px, 100%);
+            margin: 1.25rem auto;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: linear-gradient(180deg, var(--card), color-mix(in oklab, var(--card), transparent 15%));
+            color: var(--fg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            /* for rounded corners + sticky header clipping */
+            font: 500 0.95rem/1.5 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        /* Make table scroll nicely on small screens */
+        table:has(> tbody#bill) {
+            display: block;
+            overflow-x: auto;
+        }
+
+        table:has(> tbody#bill) thead,
+        table:has(> tbody#bill) tbody,
+        table:has(> tbody#bill) tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            /* tidy columns */
+        }
+
+        /* Sticky header with subtle gradient */
+        table:has(> tbody#bill) thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            text-align: left;
+            font-weight: 700;
+            letter-spacing: .01em;
+            padding: 14px 16px;
+            background:
+                linear-gradient(180deg, color-mix(in oklab, var(--accent-weak), transparent 25%), transparent),
+                color-mix(in oklab, var(--bg), var(--card) 60%);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: saturate(120%) blur(4px);
+        }
+
+        /* Body cells */
+        table:has(> tbody#bill) td {
+            padding: 14px 16px;
+            border-bottom: 1px solid color-mix(in oklab, var(--border), transparent 30%);
+            vertical-align: middle;
+            transition: background-color .25s ease, color .25s ease;
+        }
+
+        /* Zebra stripes */
+        table:has(> tbody#bill) tbody tr:nth-child(even) td {
+            background: color-mix(in oklab, var(--card), var(--bg) 35%);
+        }
+
+        /* Row hover */
+        @media (hover:hover) {
+            table:has(> tbody#bill) tbody tr:hover td {
+                background: color-mix(in oklab, var(--accent-weak), var(--card) 70%);
+            }
+        }
+
+        /* Focus within (e.g., when cells get focus for editing) */
+        table:has(> tbody#bill) tbody tr:focus-within td {
+            outline: 2px solid color-mix(in oklab, var(--accent), transparent 40%);
+            outline-offset: -2px;
+        }
+
+        /* Column alignment: numbers to the end, names to start */
+        table:has(> tbody#bill) th:nth-child(1),
+        table:has(> tbody#bill) td:nth-child(1) {
+            /* Sr No */
+            width: 84px;
+            text-align: center;
+        }
+
+        table:has(> tbody#bill) th:nth-child(2),
+        table:has(> tbody#bill) td:nth-child(2) {
+            /* Name */
+            text-align: left;
+        }
+
+        table:has(> tbody#bill) th:nth-child(3),
+        table:has(> tbody#bill) td:nth-child(3),
+        table:has(> tbody#bill) th:nth-child(4),
+        table:has(> tbody#bill) td:nth-child(4),
+        table:has(> tbody#bill) th:nth-child(5),
+        table:has(> tbody#bill) td:nth-child(5) {
+            text-align: end;
+        }
+
+        /* Totals row emphasis (if you append one) */
+        table:has(> tbody#bill) tbody tr.total-row td {
+            font-weight: 700;
+            border-top: 2px solid var(--border);
+            background:
+                linear-gradient(180deg, transparent, color-mix(in oklab, var(--accent-weak), transparent 75%));
+        }
+
+        /* Compact density option (toggle by adding data-density="compact" on <table>) */
+        table:has(> tbody#bill)[data-density="compact"] td,
+        table:has(> tbody#bill)[data-density="compact"] th {
+            padding-block: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Subtle “elevated” first column */
+        table:has(> tbody#bill) td:nth-child(1) {
+            color: var(--muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Smooth corners on scrollbars (2025 polish) */
+        table:has(> tbody#bill)::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        table:has(> tbody#bill)::-webkit-scrollbar-track {
+            background: color-mix(in oklab, var(--bg), var(--card) 50%);
+            border-radius: 999px;
+        }
+
+        table:has(> tbody#bill)::-webkit-scrollbar-thumb {
+            background: color-mix(in oklab, var(--accent), var(--fg) 10%);
+            border-radius: 999px;
+        }
+
+        article {
+            display: flex;
+            justify-content: space-between;
+            background-color: lightblue;
+            padding: 10px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>3rd way to create object</h1>
+    <form action="" method="post" onsubmit="return InsertItem();">
+        <article>
+            <div>
+                <input type="text" id="name" required placeholder="Name" />
+            </div>
+            <div>
+                <input type="number" id="price" required placeholder="Price" oninput="calculateTotal();" />
+            </div>
+            <div>
+                <input type="number" id="quantity" required placeholder="Quantity" oninput="calculateTotal();" />
+            </div>
+            <div>
+                <input type="number" id="total" required placeholder="Total" value="1000" readonly />
+            </div>
+            <div>
+                <input type="submit" id="submit" value="Insert Item" />
+                <input type="reset" id="reset" value="Clear all" />
+            </div>
+        </article>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Sr No</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="bill"></tbody>
+        <tfoot>
+            <tr>
+                <td>Grand total</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td id="grandtotal">0</td>
+            </tr>
+        </tfoot>
+    </table>
+    <script>
+        var billTotal = 0;
+        var srno = 1;
+
+        //global variable
+        function calculateTotal() {
+            //alert('hello');
+            let price = document.getElementById('price').value;
+            let quantity = document.getElementById('quantity').value;
+            console.log(price, quantity);
+            if (price != '' && quantity != '') {
+                price = parseInt(price);
+                quantity = parseInt(quantity);
+                let itemTotal = price * quantity;
+                console.log(itemTotal);
+                document.getElementById('total').value = itemTotal;
+            }
+        }
+        function deleteItem(tag)
+        {
+            // alert('delete click.');
+            let table = tag.parentNode.parentNode.parentNode;
+            // console.log(table.innerHTML);
+            table.removeChild(tag.parentNode.parentNode);
+        }
+        function InsertItem() {
+
+            function BillItem(name, price, quantity) {
+                //create property variable
+                this.name = name,
+                    this.price = price,
+                    this.quantity = quantity,
+                    this.total = parseInt(this.price) * parseInt(this.quantity),
+                    console.log(this);
+                //create inner function
+                this.addRow = function () {
+                    document.getElementById('bill').innerHTML += `<tr>
+                        <td>${srno++}</td>
+                        <td>${this.name}</td>
+                        <td>${this.price}</td>
+                        <td>${this.quantity}</td>
+                        <td>${this.total}</td>
+                        <td><button onclick="deleteItem(this);">Delete</button></td>
+                    </tr>`;
+                    billTotal += this.total;
+                    console.log('bill total ' + billTotal);
+                    document.getElementById('grandtotal').innerHTML = billTotal;
+                }
+            }
+            var name = document.getElementById('name').value;
+            var price = document.getElementById('price').value;
+            var quantity = document.getElementById('quantity').value;
+            var b1 = new BillItem(name, price, quantity);
+            b1.addRow();
+            document.getElementById('name').value = '';
+            document.getElementById('price').value = '';
+            document.getElementById('quantity').value = '';
+            document.getElementById('total').value = '';
+            return false;
+        }
+    </script>
+</body>
+
+</html>
