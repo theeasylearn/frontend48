@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>single level inheritance</h1>
+    <form action="" onsubmit="return calculateArea();">
+        <label for="">Enter radius</label>
+        <input type="number" id="radius" required />
+        <input type="submit" value="Calculate Area" />
+    </form>
+    <h2 id="result"></h2>
+    <script>
+        
+        // create class MyMath
+        class MyMath {
+            //create methods
+            getSquare(numbers) {
+                //local variable
+                let square = numbers * numbers;
+                return square;
+            }
+            getPi() {
+                //local variable
+                let pi = 22 / 7;
+                return pi;
+            }
+        }
+        class Circle extends MyMath {
+            constructor(radius) {
+                super(); //calling parent class constructor (required)
+                //create property variable
+
+                //variables created inside constructor using this keyword is called property variable. we can access it from anywhere in whole class 
+                this.radius = radius;
+            }
+            getArea() {
+                //formula pi * radius * radius;
+                let area = super.getPi() * super.getSquare(this.radius);
+                return area;
+            }
+        }
+        function calculateArea()
+        {
+            let radius = document.getElementById('radius').value;
+            //create Circle class object
+            let c1 = new Circle(radius); //it will call constructor
+            let area = c1.getArea();
+            document.getElementById('result').innerHTML = area;
+            return  false;
+        }
+        
+    </script>
+</body>
+
+</html>

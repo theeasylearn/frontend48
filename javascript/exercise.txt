@@ -19,3 +19,21 @@ then display message in his language.
 
 8) create template using 2nd technique to store data about Movie. store 
     Name,generation, duration, star cast, ticket price 
+
+------------------------------------------------------------------------------------
+1) create single level inheritance that has 2 class 
+    kb class 
+        which has construtor for bytes and method getkb() which return KB of bytes 
+    mb class extends kb
+        which has construtor which should call parent class construtor and method getmb() which return MB of bytes 
+    
+2) create multi level inheritance that has 2 class 
+    kb class 
+        which has construtor for bytes and method getkb() which return KB of bytes 
+    mb class extends kb
+        which has construtor which should call parent class construtor and method getmb() which return MB of bytes 
+    gb class extends gb
+        which has construtor which should call parent class construtor and method getgb() which return GB of bytes 
+    tb class extends gb
+        which has construtor which should call parent class construtor and method getTB() which return TB of bytes 
+    
