@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>hierarchical inheritance</h1>
+    <script>
+        //parent class
+        class Person {
+            constructor(name, age) {
+                //create and initialize property variable
+                console.log("Person class constructor called.");
+                this.name = name;
+                this.age = age;
+            }
+            display() {
+                console.log(this.name + " " + this.age);
+            }
+            walk() {
+                console.log(this.name + " can walk");
+            }
+            talk() {
+                console.log(this.name + " can talk");
+            }
+        }
+        class Actor extends Person {
+
+            constructor(name, age, language, zone) {
+                super(name, age); //calling parent class constructor
+                this.language = language;
+                this.zone = zone;
+                console.log("Actor class constructor called.");
+            }
+            Acting() {
+                console.log(this.name + " can do acting in " + this.language + this.zone + " type of movie");
+            }
+            //method overridding
+            display() {
+                super.display(); //calling parent class method
+                this.Acting(); //calling own method
+            }
+        }
+        class Player extends Person {
+            constructor(name, age, game) {
+                super(name, age); //required 
+                this.game = game;
+                console.log("Player class constructor called.");
+            }
+            play() {
+                console.log(this.name + " can play " + this.game);
+            }
+            // method overidding
+            display() {
+                super.display();
+                this.play();
+            }
+        }
+
+        var a1 = new Actor('Amitabh bachhan', 80, 'hindi', 'action');
+        a1.display();
+
+        var p1 = new Player('Sachin Tendulkar', 40, 'Cricket');
+        p1.display();
+
+    </script>
+</body>
+
+</html>
