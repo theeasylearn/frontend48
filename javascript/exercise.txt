@@ -37,3 +37,16 @@ then display message in his language.
     tb class extends gb
         which has construtor which should call parent class construtor and method getTB() which return TB of bytes 
     
+map & Filter (use bootstrap)
+-----------------------------------
+1) create web page which should display all football playing nations using array & Object & map function 
+Name, Contient, Flag Image, year of winning world cup 
+
+2) extend above example provide text box  to type name of Contient and filter list using filter function
+
+3) create web page which should display bouse route, display source, destination, Bus departure time, journey type(Express/AC/sleeper) using array & Object & map function 
+
+4) extend above example provide 2 text box to type source & destination and filter list using filter function
+
+
+
