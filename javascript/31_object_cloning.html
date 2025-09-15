@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Object cloning</h1>
+    <h2>use console</h2>
+    <script>
+        const car1 = {
+            brand: "Tata",
+            model: "Nexon",
+            year: 2024,
+            price: 900000,
+            fuelType: "Petrol", // different property
+            tyre: 'Radial'
+        };
+        console.log("before change");
+        console.log("car 1", car1);
+        //create object that has copy of car1 
+        //wrong way
+        // const car2 = car1; //when we use this line, it create reference variable car2 which has reference of car1. it means there is actually only same object with 2 name (if you change any one other will change)
+        var car2 = {};
+        for (let key in car1) {
+            car2[key] = car1[key];
+        }
+        console.log("carr 2", car2);
+        car2.model = "xuv600";
+        car1.price = 1250000;
+        car2.brand = "Mahindra";
+        car2.tyre = "carbon";
+        console.log("after change");
+        console.log("car 1", car1);
+        console.log("carr 2", car2);
+
+    </script>
+</body>
+
+</html>

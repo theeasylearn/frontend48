@@ -30,7 +30,8 @@
             model: "Nexon",
             year: 2024,
             price: 900000,
-            fuelType: "Petrol" // different property
+            fuelType: "Petrol", // different property
+            tyre:'Radial'
         };
 
         // Car 2
@@ -39,24 +40,32 @@
             model: "XUV700",
             year: 2024,
             price: 1600000,
-            color: "Red" // different property
+            color: "Red", // different property
+            automatic: "Fully automatic",
+            heatedSeat: true,
+            sound: 'Herman sound system'
         };
 
         console.log(car1);
         console.log(car2);
         //es6 spread operator on car1 and car2
-        var newCar = {...car1,...car2};
+        var newCar = { ...car1, ...car2 };
         console.log(newCar);
 
         var garage = [];
         garage.push(car1); //one way to insert object into list at end
-        garage = [...garage,car2];
-        temp = ``;
+        garage = [...garage, car2];
+        let line = ``;
         garage.map((item) => {
-            let {brand,model,year,price} = item;
-            temp+= `<p>Name ${brand} Model ${model} Year ${year} Price ${price}</p>`;
+            //let {brand,model,year,price} = item;
+            //for each loop 
+            let temp = ``;
+            for (let key in item) {
+                temp += `<b>${key}</b> = ${item[key]} `;
+            }
+            line = line + "<p>" + temp + "</p>";
         });
-        document.getElementById('three').innerHTML = temp;
+        document.getElementById('three').innerHTML = line;
     </script>
 </body>
 
