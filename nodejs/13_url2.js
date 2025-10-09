@@ -23,16 +23,22 @@ const server=http.createServer(
         
         let output=data;
 
-        if(queryString.source!=undefined && queryString.destination!=undefined){
-            data.filter(
-            if(queryString.source==data.from && queryString.destination==data.to){
-                output=
+        if(queryString.source!=undefined && queryString.destination!=undefined && queryString.price!=undefined){
+            output=data.filter((item)=>{
+                if(queryString.source==item.from && queryString.destination==item.to && queryString.price>=parseInt(item.price)){
+                    return item;
             }
-            );
+            });
         }
-
-        else if(queryString.source!=undefined && queryString.destination!=undefined && queryString.price<=parseInt(data.price)){
-            data.filter();
+        
+        else if(queryString.source!=undefined && queryString.destination!=undefined){
+            output=data.filter((item)=>{
+                if(queryString.source==item.from && queryString.destination==item.to){
+                    return item;
+                }
+            }
+                
+            );
         }
 
         res.write(JSON.stringify(output));
