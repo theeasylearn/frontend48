@@ -1,6 +1,5 @@
 var express = require('express');
 var bodyparser = require('body-parser');
-var connection = require("./connection");
 //import contact.js 
 var contact = require('./contact');
 var app = express();

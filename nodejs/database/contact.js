@@ -1,4 +1,4 @@
-var connection = require("./connection");
+var connection = require("./connect");
 function insert(request, response) {
     var email = request.body.email;
     var mobile = request.body.mobile;
@@ -15,6 +15,7 @@ function insert(request, response) {
         connection.con.query(sql, data, function (error, result) {
             if (error) {
                 response.json([{ 'error': 'error occured' }]);
+                console.log(error);
             }
             else {
                 response.json([{ 'error': 'no' }, { 'success': 'yes' }, { 'message': 'contact inserted....' }]);

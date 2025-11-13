@@ -1,15 +1,15 @@
 const mysql=require('mysql');
 
-const conn=mysql.createConnection(
+const con=mysql.createConnection(
     {
         host:"localhost",
         user:"root",
         password:"",
-        database:"node"
+        database:"frontend48"
     }
 );
 
-conn.connect(
+con.connect(
     (error)=>{
         if(error){
             console.log(error);
@@ -20,4 +20,4 @@ conn.connect(
     }
 );
 
-module.exports.conn=conn;
+module.exports.con=con;
