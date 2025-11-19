@@ -8,7 +8,7 @@ var app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 const ROUTE = "/contact";
-const USER = "/user/"
+const USER = "/user"
 //use Post Method to insert new contact 
 //input : email,mobile,name,detail
 //all input is required

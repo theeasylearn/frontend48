@@ -21,4 +21,4 @@ let security = {
         }
     }
 }
-module.exports = security;
+module.exports.security = security;
