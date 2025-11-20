@@ -14,8 +14,13 @@ export function insert(request, response) {
             let data = [email, hashed_password, mobile];
             con.query(sql, data, function (error, result) {
                 if (error != null) {
-                    response.json([{ 'error': 'error occured' }]);
                     console.log(error);
+                    if (error.code === 'ER_DUP_ENTRY') {
+                        response.json([{ 'error': 'email/mobile is already registered with us, use unique email & mobile' }]);
+                    }
+                    else {
+                        response.json([{ 'error': 'error occured' }]);
+                    }
                 }
                 else {
                     response.json([{ 'error': 'no' }, { 'success': 'yes' }, { 'message': 'user registered successfully' }]);
@@ -32,5 +37,32 @@ export function remove(request, response) {
     //DELETE FROM `users` WHERE 0
 }
 export function select(request, response) {
-    //SELECT `id`, `email`, `password`, `mobile`, `created_at` FROM `users` WHERE 1
+    let { email, password } = request.query;
+    if (email === undefined || password === undefined) {
+        response.json([{ 'error': 'input is missing' }]);
+    }
+    else {
+        let sql = "select id,password from users where email=?";
+        let data = [email];
+        con.query(sql, data, function (error, result) {
+            if (error) {
+                response.json([{ 'error': 'error occured' }]);
+                console.log(error);
+            }
+            else {
+                if (result.length === 0) {
+                    response.json([{ 'error': 'no' }, { 'success': 'no' }, { 'message': 'invalid email' }]);
+                }
+                else {
+                    let hashedPassword = result[0]['password']; //encrypted password
+                    security.comparePassword(password, hashedPassword).then((isTrue) => {
+                        if (isTrue === true)
+                            response.json([{ 'error': 'no' },{ 'success': 'yes' },{ 'message': 'login successfull' },{'id':result[0]['id']}]);
+                        else
+                            response.json([{ 'error': 'no' }, { 'success': 'no' }, { 'message': 'invalid email' }]);
+                    });
+                }
+            }
+        });
+    }
 }
