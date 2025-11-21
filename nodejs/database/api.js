@@ -34,6 +34,14 @@ app.put(ROUTE, (request, response) => contact.update(request, response));
 
 //users 
 app.post(USER, (request, response) => users.insert(request, response));
+//change password
+//input: current_password,new_password,id
+app.put(USER, (request, response) => users.update(request, response));
+//login
+//input : email, password
 app.get(USER, (request, response) => users.select(request, response));
+//forgot password 
+//input : email;
+app.delete(USER, (request, response) => users.select(request, response));
 app.listen(5000);
 console.log('ready to accept request');
