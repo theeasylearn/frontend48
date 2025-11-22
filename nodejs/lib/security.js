@@ -1,4 +1,5 @@
 const argon2 = require('argon2');
+const crypto = require('crypto'); //built in module
 let security = {
     getHashPassword: async (password) => {
         try {

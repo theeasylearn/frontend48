@@ -42,6 +42,6 @@ app.put(USER, (request, response) => users.update(request, response));
 app.get(USER, (request, response) => users.select(request, response));
 //forgot password 
 //input : email;
-app.delete(USER, (request, response) => users.select(request, response));
+app.delete(USER, (request, response) => users.remove(request, response));
 app.listen(5000);
 console.log('ready to accept request');

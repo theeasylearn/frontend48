@@ -1,5 +1,6 @@
 import { con } from "./connect.js";
 import { security } from "../lib/security.js";
+import {EMail}  from  '../lib/gmail.js ';
 export function insert(request, response) {
     //
     //object destructring 
@@ -79,7 +80,7 @@ export function update(request, response) {
 }
 export function remove(request, response) {
     //DELETE FROM `users` WHERE 0
-    let { email } = request.query;
+    let { email } = request.body;
     if (email === undefined) {
         response.json([{ 'error': 'input is missing' }]);
     }
@@ -99,7 +100,30 @@ export function remove(request, response) {
                     //generate new password
                     let newPassword = security.generatePassword();
                     console.log(newPassword);
-                    
+                    //update password and send email to user 
+                    //send email
+                    let subject = "password recorver mail example";
+                    let content = `you new password is ${newPassword}`;
+                    //create object of Email class 
+                    const em = new EMail();
+                    em.send(email, subject, content);
+
+                    //password hash 
+                    security.getHashPassword(newPassword).then(function (newHashPassword){
+                        let sql = "update users set password = ? where email=?";
+                        let data = [newHashPassword,email];
+                        con.query(sql,data,function(err,res){
+                            if(err)
+                            {
+                                response.json([{ 'error': 'error occured' }]);
+                                console.log(error);
+                            } 
+                            else 
+                            {
+                                response.json([{ 'error': 'no' }, { 'success': 'yes' }, { 'message': 'email send' }]);
+                            }
+                        });
+                    });
                 }
             }
         });

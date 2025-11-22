@@ -5,7 +5,7 @@ class EMail
     {
 
         this.sender = 'karan.bhatt.bhavnagar@gmail.com';
-        this.password = 'uaaz mmvm fmjg tzhn';
+        this.password = 'zbkw dixr gafq lkgd';
         this.MailSender = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 587,
