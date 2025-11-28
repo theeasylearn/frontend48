@@ -1,0 +1,3 @@
+1) create your resume only using html and display it in reactjs.
+2) create T20 world cup 2026 (mans) schedule using html and display it in reactjs
+3) create one page website for Dance class using bootstrap and display it in reactjs
