@@ -1,3 +1,7 @@
 1) create your resume only using html and display it in reactjs.
 2) create T20 world cup 2026 (mans) schedule using html and display it in reactjs
 3) create one page website for Dance class using bootstrap and display it in reactjs
+4) create one page website for Dental Doctor using bootstrap 5. convert them into functional components 
+
+5) create one page website for Hair saloon using bootstrap 5. convert them into functional components
+
