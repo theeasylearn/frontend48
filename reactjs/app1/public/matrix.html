@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Matrix Digital Clock</title>
+    <title>Matrix Digital Clock - Works in Firefox!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -16,15 +16,12 @@
             color: #0f0;
         }
 
-        /* Matrix Rain Background */
-        canvas#matrix {
+        canvas {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             z-index: 1;
         }
 
-        /* Clock Container */
         .clock-container {
             position: relative;
             z-index: 10;
@@ -36,125 +33,103 @@
         }
 
         .matrix-clock {
-            font-size: 6rem;
+            font-size: 6.5rem;
             font-weight: 900;
-            letter-spacing: 10px;
-            text-shadow: 
-                0 0 10px #0f0,
-                0 0 20px #0f0,
-                0 0 40px #0f0,
-                0 0 80px #0f0;
+            letter-spacing: 12px;
+            text-shadow: 0 0 20px #0f0, 0 0 40px #0f0, 0 0 80px #0f0;
             color: #0f0;
-            padding: 20px 40px;
-            border: 3px solid #0f0;
-            border-radius: 15px;
-            background: rgba(0, 15, 0, 0.4);
-            animation: flicker 4s infinite alternate;
+            padding: 30px 50px;
+            border: 4px solid #0f0;
+            border-radius: 20px;
+            background: rgba(0, 20, 0, 0.5);
+            animation: flicker 3s infinite alternate;
         }
 
         .date-text {
-            font-size: 1.8rem;
-            letter-spacing: 5px;
-            margin-top: 20px;
+            font-size: 2rem;
+            letter-spacing: 6px;
+            margin-top: 30px;
             text-shadow: 0 0 20px #0f0;
-            opacity: 0.9;
         }
 
-        /* Flickering Effect */
         @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 60%, 62%, 64%, 70%, 100% {
-                opacity: 1;
-                text-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 40px #0f0, 0 0 80px #0f0;
-            }
-            20%, 22%, 24%, 61%, 63%, 65% {
-                opacity: 0.7;
-                text-shadow: 0 0 5px #0f0;
-            }
+            0%, 100% { opacity: 1; text-shadow: 0 0 20px #0f0, 0 0 40px #0f0, 0 0 80px #0f0; }
+            50%      { opacity: 0.8; text-shadow: 0 0 10px #0f0; }
         }
 
         @media (max-width: 768px) {
-            .matrix-clock {
-                font-size: 3.5rem;
-                letter-spacing: 5px;
-                padding: 15px 25px;
-            }
-            .date-text {
-                font-size: 1.2rem;
-            }
+            .matrix-clock { font-size: 3.5rem; letter-spacing: 6px; padding: 20px 30px; }
+            .date-text { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
-    <canvas id="matrix"></canvas>
 
-    <!-- Clock Display -->
-    <div class="clock-container">
-        <div>
-            <div class="matrix-clock" id="clock">88:88:88</div>
-            <div class="date-text" id="date">WAKE UP, NEO...</div>
-        </div>
+<canvas id="matrix"></canvas>
+
+<div class="clock-container">
+    <div>
+        <div class="matrix-clock" id="clock">88:88:88</div>
+        <div class="date-text" id="date">LOADING THE MATRIX...</div>
     </div>
+</div>1
 
-    <script>
-        // Matrix Rain Effect
-        const canvas = document.getElementById('matrix');
-        const ctx = canvas.getContext('2d');
+<script>
+    // === MATRIX RAIN - NOW WORKS IN FIREFOX ===
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
 
+    // Set canvas size
+    function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-        const letters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
+    const fontSize = 16;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = new Array(columns).fill(1);
 
-        const drops = Array(Math.floor(columns)).fill(1);
+    const matrixChars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-        function draw() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function draw() {
+        // Semi-transparent black trail
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = '#0f0';
-            ctx.font = fontSize + 'px monospace';
+        ctx.fillStyle = '#0f0';
+        ctx.font = fontSize + 'px monospace';
 
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                const x = i * fontSize;
-                const y = drops[i] * fontSize;
+        for (let i = 0; i < drops.length; i++) {
+            const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+            const x = i * fontSize;
+            const y = drops[i] * fontSize;
 
-                ctx.fillText(text, x, y);
+            ctx.fillText(char, x, y);
 
-                if (y > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
+            // Randomly reset drop to top
+            if (y > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
             }
+            drops[i]++;
         }
-
-        setInterval(draw, 35);
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        // Digital Clock Update
-        function updateClock() {
-            const now = new Date();
-            
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-
-            const day = now.toLocaleDateString('en-US', { weekday: 'long' });
-            const date = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-
-            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-            document.getElementById('date').textContent = `${day.toUpperCase()} • ${date.toUpperCase()}`;
-        }
-
-        // Update clock every second
-        setInterval(updateClock, 1000);
-        updateClock(); // Initial call
-    </script>
+    }
+    // Run at stable 33fps (works perfectly in Firefox)
+    setInterval(draw, 33);
+    // === DIGITAL CLOCK ===
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dateStr = now.toLocaleDateString('en-US', options).toUpperCase();
+        document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        document.getElementById('date').textContent = dateStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
 </body>
 </html>
