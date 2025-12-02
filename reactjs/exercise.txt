@@ -5,3 +5,6 @@
 
 5) create one page website for Hair saloon using bootstrap 5. convert them into functional components
 
+6) update example of 8 example display date in below format
+    Tuesday, 02 December 2025
+
