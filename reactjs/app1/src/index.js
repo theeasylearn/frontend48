@@ -131,6 +131,26 @@ function AboutUs() {
         </div>
     </section>);
 }
+function MenuItem(props) {
+    //object destructring 
+    let { name, price, description } = props;
+    return (<div className="col-md-6 col-lg-3">
+        <div className="menu-item rounded overflow-hidden shadow-sm h-100">
+            <img
+                src="https://picsum.photos/400?random=1"
+                className="img-fluid"
+                alt="Bruschetta"
+            />
+            <div className="p-4">
+                <h5>{name}</h5>
+                <p className="text-muted mb-2">
+                    {description}
+                </p>
+                <h4 className="text-gold">Rs {price}</h4>
+            </div>
+        </div>
+    </div>);
+}
 function DinningMenu() {
     return (<section id="menu" className="py-5 bg-light">
         <div className="container">
@@ -139,148 +159,45 @@ function DinningMenu() {
                 <p className="lead">Carefully crafted dishes to satisfy every palate</p>
             </div>
             <div className="row g-4">
-                {/* Menu Item 1 */}
-                <div className="col-md-6 col-lg-4">
-                    <div className="menu-item rounded overflow-hidden shadow-sm h-100">
-                        <img
-                            src="https://images.unsplash.com/photo-1563379926893-0f0db7e9cd37?w=600"
-                            className="img-fluid"
-                            alt="Bruschetta"
-                        />
-                        <div className="p-4">
-                            <h5>Bruschetta al Pomodoro</h5>
-                            <p className="text-muted mb-2">
-                                Grilled bread rubbed with garlic, topped with fresh tomatoes,
-                                basil &amp; olive oil
-                            </p>
-                            <h4 className="text-gold">$12</h4>
-                        </div>
-                    </div>
-                </div>
-                {/* Menu Item 2 */}
-                <div className="col-md-6 col-lg-4">
-                    <div className="menu-item rounded overflow-hidden shadow-sm h-100">
-                        <img
-                            src="https://images.unsplash.com/photo-1574894700741-4b8353ed3ab0?w=600"
-                            className="img-fluid"
-                            alt="Caprese"
-                        />
-                        <div className="p-4">
-                            <h5>Insalata Caprese</h5>
-                            <p className="text-muted mb-2">
-                                Fresh mozzarella, tomatoes, basil, balsamic reduction
-                            </p>
-                            <h4 className="text-gold">$16</h4>
-                        </div>
-                    </div>
-                </div>
-                {/* Menu Item 3 */}
-                <div className="col-md-6 col-lg-4">
-                    <div className="menu-item rounded overflow-hidden shadow-sm h-100">
-                        <img
-                            src="https://images.unsplash.com/photo-1621996346565-e3dbc44ae37d?w=600"
-                            className="img-fluid"
-                            alt="Pasta"
-                        />
-                        <div className="p-4">
-                            <h5>Spaghetti Carbonara</h5>
-                            <p className="text-muted mb-2">
-                                Traditional Roman pasta with eggs, pecorino, guanciale &amp;
-                                black pepper
-                            </p>
-                            <h4 className="text-gold">$24</h4>
-                        </div>
-                    </div>
-                </div>
-                {/* Menu Item 4 */}
-                <div className="col-md-6 col-lg-4">
-                    <div className="menu-item rounded overflow-hidden shadow-sm h-100">
-                        <img
-                            src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"
-                            className="img-fluid"
-                            alt="Pizza"
-                        />
-                        <div className="p-4">
-                            <h5>Pizza Margherita</h5>
-                            <p className="text-muted mb-2">
-                                San Marzano tomatoes, fresh mozzarella, basil, extra virgin
-                                olive oil
-                            </p>
-                            <h4 className="text-gold">$22</h4>
-                        </div>
-                    </div>
-                </div>
-                {/* Menu Item 5 */}
-                <div className="col-md-6 col-lg-4">
-                    <div className="menu-item rounded overflow-hidden shadow-sm h-100">
-                        <img
-                            src="https://images.unsplash.com/photo-1604902396817-360861d79d47?w=600"
-                            className="img-fluid"
-                            alt="Risotto"
-                        />
-                        <div className="p-4">
-                            <h5>Risotto ai Funghi</h5>
-                            <p className="text-muted mb-2">
-                                Creamy arborio rice with wild mushrooms and truffle oil
-                            </p>
-                            <h4 className="text-gold">$28</h4>
-                        </div>
-                    </div>
-                </div>
-                {/* Menu Item 6 */}
-                <div className="col-md-6 col-lg-4">
-                    <div className="menu-item rounded overflow-hidden shadow-sm h-100">
-                        <img
-                            src="https://images.unsplash.com/photo-1606890658317-6279341de6f5?w=600"
-                            className="img-fluid"
-                            alt="Osso Buco"
-                        />
-                        <div className="p-4">
-                            <h5>Osso Buco</h5>
-                            <p className="text-muted mb-2">
-                                Braised veal shank with vegetables, white wine &amp; gremolata
-                            </p>
-                            <h4 className="text-gold">$42</h4>
-                        </div>
-                    </div>
-                </div>
-                {/* Menu Item 7 */}
-                <div className="col-md-6 col-lg-4">
-                    <div className="menu-item rounded overflow-hidden shadow-sm h-100">
-                        <img
-                            src="https://images.unsplash.com/photo-1572449043416-55f4685c9db5?w=600"
-                            className="img-fluid"
-                            alt="Tiramisu"
-                        />
-                        <div className="p-4">
-                            <h5>Tiramisù Classico</h5>
-                            <p className="text-muted mb-2">
-                                Espresso-soaked ladyfingers with mascarpone cream &amp; cocoa
-                            </p>
-                            <h4 className="text-gold">$12</h4>
-                        </div>
-                    </div>
-                </div>
-                {/* Menu Item 8 */}
-                <div className="col-md-6 col-lg-4">
-                    <div className="menu-item rounded overflow-hidden shadow-sm h-100">
-                        <img
-                            src="https://images.unsplash.com/photo-1563805042-7684c7f057f3?w=600"
-                            className="img-fluid"
-                            alt="Panna Cotta"
-                        />
-                        <div className="p-4">
-                            <h5>Panna Cotta</h5>
-                            <p className="text-muted mb-2">
-                                Silky vanilla cooked cream with berry compote
-                            </p>
-                            <h4 className="text-gold">$10</h4>
-                        </div>
-                    </div>
-                </div>
+                <MenuItem name='Pav Bhaji' price='150' description='Pav Bhaji is a flavorful blend of mashed vegetables cooked with aromatic spices and butter, served with soft, toasted pav. Its rich taste, fresh onions, lemon, and coriander make it a crowd-pleaser. Ideal as a quick snack or a hearty meal.' />
+
+                <MenuItem name='Masala Dosa' price='120' description='A crisp, golden dosa filled with a mildly spiced potato mixture. Served with coconut chutney and sambar, it offers a balanced blend of texture and flavor. Light yet satisfying, this South Indian classic is perfect for breakfast or a wholesome meal.' />
+
+                <MenuItem name='Paneer Tikka' price='180' description='Soft paneer cubes marinated in yogurt and aromatic spices, then grilled to perfection. Each bite carries smoky flavor and gentle heat. Served with mint chutney, this dish is a favorite appetizer for anyone who enjoys bold, vibrant Indian flavors.' />
+
+                <MenuItem name='Veg Biryani' price='160' description='A fragrant rice dish layered with vegetables, herbs, and traditional biryani spices. Slow-cooked for rich aroma and depth, every spoonful delivers warmth and comfort. Served with raita, it makes a satisfying and wholesome main course.' />
+
+                <MenuItem name='Chole Bhature' price='140' description='A hearty North Indian classic featuring spicy chickpea curry paired with fluffy, golden bhature. The combination offers bold flavor and satisfying richness. Finished with onions and lemon, it’s ideal for guests craving an indulgent, filling meal.' />
+
+                <MenuItem name='Hakka Noodles' price='130' description='Stir-fried noodles tossed with crunchy vegetables and light seasoning for a flavorful yet balanced taste. This Indo-Chinese favorite is quick, comforting, and perfect for guests who enjoy fast, tasty meals with lively textures.' />
+
+                <MenuItem name='Paneer Butter Masala' price='170' description='Tender paneer pieces simmered in a smooth tomato-butter gravy with mild spices. Rich, creamy, and comforting, this dish pairs beautifully with naan or rice. A popular choice for diners who love gentle spice and luxurious texture.' />
+
+                <MenuItem name='Dal Tadka' price='110' description='A comforting yellow dal tempered with ghee, cumin, garlic, and red chilies. Simple yet full of flavor, it pairs well with rice or roti. This homestyle dish is perfect for guests seeking something warm, light, and satisfying.' />
+
+                <MenuItem name='Veg Manchurian' price='150' description='Crisp vegetable dumplings tossed in a flavorful Indo-Chinese gravy with garlic, spring onions, and mild spices. A great choice for those who enjoy rich, savory dishes with a balance of sweetness and heat.' />
+
+                <MenuItem name='Aloo Paratha' price='90' description='Soft, stuffed parathas filled with seasoned mashed potatoes and cooked on a griddle with butter. Served with curd or pickle, it’s a homely, satisfying meal that appeals to diners looking for comfort and traditional flavor.' />
+
+                <MenuItem name='Tawa Pulav' price='130' description='A Mumbai-style rice dish cooked on a hot tawa with vegetables, pav bhaji spices, and butter. Bright, aromatic, and full of flavor, it’s a quick, filling option that works well for lunch or dinner.' />
+
+                <MenuItem name='Sev Puri' price='80' description='A popular street snack featuring crisp puris topped with potatoes, chutneys, onions, and sev. It delivers a lively mix of sweet, tangy, and spicy flavors in every bite. Light, refreshing, and perfect as a starter.' />
+
             </div>
         </div>
     </section>)
+}
+function CustomerReviewItem(props) {
+    //object destructring 
+    let { name, review } = props;
+    return (<div className="col-md-6 col-lg-3">
+        <div className="testimonial-item text-center">
+            <p className="mb-4">
+                {review}
+            </p>
+            <h6 className="text-gold">— {name}</h6>
+        </div>
+    </div>);
 }
 function Testimonials() {
     return (<section id="testimonials" className="py-5">
@@ -289,42 +206,26 @@ function Testimonials() {
                 <h2 className="section-title text-gold">What Our Guests Say</h2>
             </div>
             <div className="row g-4">
-                <div className="col-md-6 col-lg-3">
-                    <div className="testimonial-item text-center">
-                        <p className="mb-4">
-                            "Best Italian food outside of Italy! The carbonara is perfection."
-                        </p>
-                        <h6 className="text-gold">— Maria Rossi</h6>
-                        <small>Food Critic</small>
-                    </div>
-                </div>
-                <div className="col-md-6 col-lg-3">
-                    <div className="testimonial-item text-center">
-                        <p className="mb-4">
-                            "Amazing ambiance and impeccable service. A true gem!"
-                        </p>
-                        <h6 className="text-gold">— James Carter</h6>
-                        <small>Regular Guest</small>
-                    </div>
-                </div>
-                <div className="col-md-6 col-lg-3">
-                    <div className="testimonial-item text-center">
-                        <p className="mb-4">
-                            "The tiramisu melted in my mouth. Will definitely return!"
-                        </p>
-                        <h6 className="text-gold">— Sophie Laurent</h6>
-                        <small>Travel Blogger</small>
-                    </div>
-                </div>
-                <div className="col-md-6 col-lg-3">
-                    <div className="testimonial-item text-center">
-                        <p className="mb-4">
-                            "Authentic flavors and warm hospitality. Felt like home."
-                        </p>
-                        <h6 className="text-gold">— Luca Bianchi</h6>
-                        <small>Local Resident</small>
-                    </div>
-                </div>
+                <CustomerReviewItem name='Ankit Patel' review="it's great experience to have authentic indian food at Kathiyawadi point" />
+                <CustomerReviewItem name='Priya Shah' review="Best Kathiyawadi food I've had outside Gujarat! Tastes just like home cooking." />
+                <CustomerReviewItem name='Mehul Desai' review="Bajra rotla with ringna bharta reminds me of my grandmother's cooking. Absolutely authentic!" />
+                <CustomerReviewItem name='Dipika Joshi' review="Best undhiyu I've had outside Gujarat. The spices are perfectly balanced!" />
+                <CustomerReviewItem name='Rahul Bhatt' review="My kids love the dhokla here. It's become our family's favorite spot!" />
+                <CustomerReviewItem name='Komal Parmar' review="Finally found a place that makes proper sev tameta nu shaak! Worth every penny." />
+                <CustomerReviewItem name='Jayesh Amin' review="The thepla and chundo combo is exactly like my mom makes. Feeling nostalgic!" />
+                <CustomerReviewItem name='Nisha Trivedi' review="Our family's favorite place! We come here every week for Kathiyawadi khaman and chaas." />
+                <CustomerReviewItem name='Ketan Modi' review="Authentic Kathiyawadi thali with all the traditional items. Best Gujarati restaurant in the area!" />
+                <CustomerReviewItem name='Foram Raval' review="The dal dhokli here tastes just like my dadi used to make. Pure comfort food!" />
+                <CustomerReviewItem name='Vishal Panchal' review="Bhakri with garlic chutney and green tea... perfect combination! Highly recommended." />
+                <CustomerReviewItem name='Shruti Gohil' review="Great food quality and generous portions. The staff is also very friendly and welcoming!" />
+                <CustomerReviewItem name='Hardik Solanki' review="The ringna bataka nu shaak with rotli is outstanding. Authentic village-style cooking!" />
+                <CustomerReviewItem name='Mansi Vora' review="Delicious kadhi and khichdi combo. Reminds me of Sunday lunches at my nani's house." />
+                <CustomerReviewItem name='Chirag Pandya' review="Best place for authentic Saurashtra cuisine. The tuvar lilva kachori is simply amazing!" />
+                <CustomerReviewItem name='Riya Makwana' review="Fresh, hot rotla served with homemade butter and jaggery. Nothing beats this!" />
+                <CustomerReviewItem name='Parth Chavda' review="The masala puri and vaghareli khichdi breakfast special is my weekend ritual now!" />
+                <CustomerReviewItem name='Neha Dholakia' review="Authentic Kathiyawadi flavors! The fafda jalebi on Sundays is a must-try." />
+                <CustomerReviewItem name='Viral Bhavsar' review="Amazing food with reasonable prices. The handvo and green chutney combination is perfect!" />
+                <CustomerReviewItem name='Krupa Purohit' review="Feels like eating at a traditional Gujarati home. The patra and sukhdi are absolutely delicious!" />
             </div>
         </div>
     </section>);
