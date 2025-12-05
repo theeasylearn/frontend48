@@ -9,3 +9,8 @@
     Tuesday, 02 December 2025
 
 7) create one page website for Hair saloon using bootstrap 5. convert them into functional components
+
+8) create html page to display cricket score board of batsman 
+    refer https://www.cricbuzz.com/live-cricket-scores/108793/eng-vs-aus-2nd-test-the-ashes-2025-26
+   then convert it into class components
+

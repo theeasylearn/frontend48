@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 //class components 
-class DinningTable extends React.Component
-{
-    render()
-    {
-        return (<div className="col-lg-3 my-3">
+class Resturant extends React.Component {
+    render() {
+        return (<div className="container">
+            <div className="row">
+                <div className="col-lg-3 my-3">
                     <div className="card shadow">
                         <div className="card-header text-bg-primary d-flex justify-content-between">
                             <h5>Ankit Patel</h5>
@@ -36,14 +36,7 @@ class DinningTable extends React.Component
                             <span className="h5">Rs 0</span>
                         </div>
                     </div>
-                </div>);
-    }
-}
-class Resturant extends React.Component {
-    render() {
-        return (<div className="container">
-            <div className="row">
-                <DinningTable /> 
+                </div>
             </div>
         </div>
         );
