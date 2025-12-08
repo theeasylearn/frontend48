@@ -4,19 +4,46 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 //class components 
 class DinningTable extends React.Component
 {
+    constructor(props)
+    {
+        super(props); //required 
+        //create state object
+        this.state = {
+            thali: 0,
+            roti: 0,
+        }
+        //alert('constructor called...');
+        //create instance (property) variable
+        this.name =  props.name;
+        this.tableno = props.tableno;
+    }
+
+    updateThali = () => {
+        // this.state.thali = this.state.thali + 1;
+        this.setState({
+            thali: this.state.thali + 1
+        });
+    }
+
+    updateRoti = () => {
+        this.setState({
+            roti: this.state.roti + 1
+        });
+    }
     render()
     {
+        //alert('render called..');
         return (<div className="col-lg-3 my-3">
                     <div className="card shadow">
                         <div className="card-header text-bg-primary d-flex justify-content-between">
-                            <h5>Ankit Patel</h5>
-                            <h5><span className="badge bg-white text-primary">1</span></h5>
+                            <h5>{this.name}</h5>
+                            <h5><span className="badge bg-white text-primary">{this.tableno}</span></h5>
                         </div>
                         <div className="card-body">
-                            <button type="button" className="btn btn-danger w-100">Thali - <span className="badge bg-white text-primary">1</span></button>
+                            <button type="button" className="btn btn-danger w-100" onClick={this.updateThali}>Thali - <span className="badge bg-white text-primary">{this.state.thali}</span></button>
                             <div className="row mt-2">
                                 <div className="col-6">
-                                    <button type="button" className="btn btn-dark w-100">Roti - <span className="badge bg-white text-dark">1</span></button>
+                                    <button onClick={this.updateRoti} type="button" className="btn btn-dark w-100">Roti - <span className="badge bg-white text-dark">{this.state.roti}</span></button>
                                 </div>
                                 <div className="col-6">
                                     <button type="button" className="btn btn-warning w-100">chas - <span className="badge bg-white text-dark">1</span></button>
@@ -43,7 +70,12 @@ class Resturant extends React.Component {
     render() {
         return (<div className="container">
             <div className="row">
-                <DinningTable /> 
+                {/* when you create Dinning table class, first constructor executes then render method execute */}
+                <DinningTable name='Ram Patel' tableno='9' /> 
+                <DinningTable name='Krishna pandya' tableno='25' /> 
+                {/* 
+                <DinningTable name='Mohan sharma' tableno='36' /> 
+                <DinningTable  tableno='99' name='Ankit Patel' />  */}
             </div>
         </div>
         );
