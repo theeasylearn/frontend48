@@ -31,7 +31,8 @@ export default class DinningTable extends React.Component {
         console.log('componentDidMount method called....');
     }
     updateTotal = () => {
-        // this code will execute only after thali is updated 
+        //conditional update
+
         this.setState({
             price: (this.state.thali * this.thaliPrice) +
                 (this.state.roti * this.rotiPrice) +
@@ -69,7 +70,7 @@ export default class DinningTable extends React.Component {
     updatePapad = () => {
         this.setState({
             papad: this.state.papad + 1
-    });
+        });
 
     }
     // update phase method 
@@ -89,9 +90,19 @@ export default class DinningTable extends React.Component {
     componentWillUpdate(nextProp, nextState) {
         console.log('componentWillUpdate is called');
     }
+
     componentDidUpdate(prevProps, prevState) {
         console.log('componentDidUpdate is called');
-        this.updateTotal();
+        if (
+            this.state.thali != prevState.thali ||
+            this.state.roti !== prevState.roti ||
+            this.state.papad !== prevState.papad || 
+            this.state.chas !== prevState.chas || 
+            this.state.sweet !== prevState.sweet
+        ) 
+            {
+            this.updateTotal();
+        }
     }
     componentWillUnmount() {
         console.log('componentWillUnmount is called');

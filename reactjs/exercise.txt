@@ -14,3 +14,6 @@
     refer https://www.cricbuzz.com/live-cricket-scores/108793/eng-vs-aus-2nd-test-the-ashes-2025-26
    then convert it into class components
 
+9) create reactjs class components to calculate BMI and display obcity level. 
+
+10) create reactjs class components  for EMI calculator.  
