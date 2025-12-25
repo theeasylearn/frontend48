@@ -16,4 +16,6 @@
 
 9) create reactjs class components to calculate BMI and display obcity level. 
 
-10) create reactjs class components  for EMI calculator.  
+10) create reactjs class components  for EMI calculator. 
+
+11) 
