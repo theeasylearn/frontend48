@@ -2,43 +2,47 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 class CountryCard extends React.Component {
+    constructor(props)
+    {
+        super(props);
+        //create property variable 
+        this.name = props.name;
+        this.capital = props.capital;
+        this.currency = props.currency;
+        this.area = props.area;
+        this.map = props.map;
+        this.index = props.index;
+        console.log(this.map);
+    }
     render() {
-        return (<div className="col-md-6 col-lg-3 mb-3">
+        return (<div key={this.index} className="col-md-6 col-lg-3 mb-3">
             <div className="card shadow-sm h-100">
-                {/* Flag as header image */}
-                <img
-                    src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png"
-                    className="card-img-top"
-                    alt="Flag of India"
-                />
-
+                
                 <div className="card-body">
-                    <h3 className="card-title text-center mb-4">India</h3>
+                    <h3 className="card-title text-center mb-4">{this.name}</h3>
 
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item d-flex justify-content-between">
                             <strong>Capital:</strong>
-                            <span>New Delhi</span>
+                            <span>{this.capital}</span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between">
                             <strong>Area:</strong>
-                            <span>3,287,263 km²</span>
+                            <span>{this.area}</span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between">
                             <strong>Currency:</strong>
-                            <span>Indian Rupee (INR)</span>
+                            <span>{this.currency}</span>
                         </li>
                     </ul>
                 </div>
 
-                <div className="card-footer text-center text-muted small">
-                    Data source: Country information
-                </div>
             </div>
         </div>);
     }
 }
 function World() {
+    //json 
     const countries = [
         { country: "India", capital: "New Delhi", area: 3287263, currency: "Indian Rupee", map: "https://en.wikipedia.org/wiki/File:India_(orthographic_projection).svg" },
         { country: "United States", capital: "Washington, D.C.", area: 9833517, currency: "US Dollar", map: "https://en.wikipedia.org/wiki/File:USA_orthographic.svg" },
@@ -87,14 +91,14 @@ function World() {
         { country: "Nepal", capital: "Kathmandu", area: 147181, currency: "Nepalese Rupee", map: "https://en.wikipedia.org/wiki/File:Nepal_(orthographic_projection).svg" },
         { country: "Afghanistan", capital: "Kabul", area: 652230, currency: "Afghani", map: "https://en.wikipedia.org/wiki/File:Afghanistan_(orthographic_projection).svg" }
     ];
-
+    //   { country: "India", capital: "New Delhi", area: 3287263, currency: "Indian Rupee", map: "https://en.wikipedia.org/wiki/File:India_(orthographic_projection).svg" },
     return (<div className="container my-5">
         <div className="row justify-content-center">
-            <CountryCard />
-            <CountryCard />
-            <CountryCard />
-            <CountryCard />
-            <CountryCard />
+            {
+                countries.map((item,index) => {
+                    return <CountryCard  name={item.country} capital={item.capital} currency={item.currency} area={item.area} index={index}  />
+                })
+            }
         </div>
     </div>)
 }
