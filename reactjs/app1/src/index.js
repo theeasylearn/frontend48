@@ -2,80 +2,112 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 const root = ReactDOM.createRoot(document.getElementById('root'));
-class InsertCategory extends React.Component {
+class Category extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            items: []
+        }
     }
+    componentDidMount() {
+        //always call api inside componentDidMount3
+        let apiAddress = "https://theeasylearnacademy.com/shop/ws/category.php";
+        axios({
+            url: apiAddress,
+            method: 'get',
+            responsetype: 'json'
+        }).then((response) => {
+            //console.log(response);
+            //check if response has error 
+            let data = response.data;
+            let error = data[0]['error'];
+            if (error !== 'no') {
+                alert(error);
+            }
+            else {
+                let total = data[1]['total'];
+                if (total === 0)
+                    alert('no category found')
+                else {
+                    data.splice(0, 2); //delete 2 object from begining 
+                    this.setState({
+                        items: data
+                    });
+                }
+            }
+            console.log(error);
+        }).catch((error) => {
+            console.log(error);
+        });
 
-    updateValue = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
+    }
+    deleteCategory = (categoryid) => {
+        // alert('delete button click...' + categoryid);
+        let apiAddress = "https://theeasylearnacademy.com/shop/ws/delete_category.php?id=" + categoryid
+        console.log(apiAddress);
+        axios({
+            url: apiAddress,
+            method: 'get',
+            responsetype: 'json'
+        }).then((response) => {
+            console.log(response);
+            //[{"error":"input is missing"}]
+            // [{"error":"no"},{"message":"Category Deleted"}]
+            let error = response.data[0]['error'];
+            if (error !== 'no')
+                alert(error)
+            else {
+                //delete category from state array
+                let temp = this.state.items.filter((row) => {
+                    if (row['id'] !== categoryid)
+                        return row;
+                });
+                this.setState({
+                    items: temp
+                });
+                alert(response.data[1]['message']);
+            }
+        }).catch((error) => {
+            alert('it seems you are not connected with internet or server is down, or wront api name');
         })
     }
-    updatePhoto = (file) => {
-
-        this.setState({
-            photo: file
-        });
-    }
-    uploadCategory = (event) => {
-        console.log(this.state);
-        event.preventDefault();
-
-        //api calling
-    }
     render() {
-        return (<div className="container mt-5">
+        return (<div className="container mt-4">
             <div className="row justify-content-center">
-                <div className="col-lg-6 col-md-8 col-sm-12">
+                <div className="col-lg-100">
                     <div className="card shadow">
-                        <div className="card-header bg-primary text-white text-center">
-                            <h4 className="mb-0">Insert Category</h4>
+                        <div className="card-header bg-primary text-white">
+                            <h5 className="mb-0">Content List</h5>
                         </div>
-                        <div className="card-body">
-                            <form
-                                method='post'
-                                encType='multipart/form-data'
-                                onSubmit={this.uploadCategory}
-                            >
-                                {/* Category Name */}
-                                <div className="mb-3">
-                                    <label htmlFor="name" className="form-label">Category Name</label>
-                                    <input type="text" className="form-control" id="name" name="name" required value={this.state.name}
-                                        onChange={(e) => this.updateValue(e)} />
-                                </div>
-                                {/* Category Photo */}
-                                <div className="mb-3">
-                                    <label htmlFor="photo" className="form-label">Category Photo</label>
-                                    <input type="file" className="form-control" id="photo" name="photo" required
-                                        onChange={(e) => this.updatePhoto(e.target.files[0])} />
-                                </div>
-                                {/* Category Live */}
-                                <div className="mb-3">
-                                    <label className="form-label d-block">Is Category Live?</label>
-                                    <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="islive" id="yes"
-                                            value={1} required
-                                            onChange={(e) => this.updateValue(e)}
-                                        />
-                                        <label className="form-check-label" htmlFor="yes">Yes</label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="islive" id="no"
-                                            value={0} required
-                                            onChange={(e) => this.updateValue(e)}
-                                        />
-                                        <label className="form-check-label" htmlFor="no">No</label>
-                                    </div>
-                                </div>
-                                {/* Submit Button */}
-                                <div className="d-grid">
-                                    <button type="submit" className="btn btn-primary">
-                                        Save Category
-                                    </button>
-                                </div>
-                            </form>
+                        <div className="card-body p-0">
+                            <div className="table-responsive">
+                                <table className="table table-bordered table-striped mb-0 align-middle text-center">
+                                    <thead className="table-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Title</th>
+                                            <th>Photo</th>
+                                            <th>Is Live</th>
+                                            <th>Operations</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.items.map((row) => {
+                                            return (<tr>
+                                                <td>{row.id}</td>
+                                                <td>{row.title}</td>
+                                                <td width='300px'>
+                                                    <img src={"https://theeasylearnacademy.com/shop/images/category/" + row.photo} className="img-fluid img-thumbnail" alt="photo" />
+                                                </td>
+                                                <td>
+                                                    {row.islive === '1' ? "Yes" : "No"}
+                                                </td>
+                                                <td><a className='btn btn-warning'>Edit</a><a className='btn btn-danger' onClick={() => this.deleteCategory(row.id)}>Delete</a></td>
+                                            </tr>)
+                                        })};
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -84,4 +116,4 @@ class InsertCategory extends React.Component {
         );
     }
 }
-root.render(<InsertCategory />)
+root.render(<Category />)
