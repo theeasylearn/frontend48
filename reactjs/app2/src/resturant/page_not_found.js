@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-
-export default function Aboutus() {
+export default function Pagenotfound() {
     return (<div>
-        
+        {/* Header */}
         <header className="bg-white shadow-md fixed w-full top-0 z-10">
             <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <a href="index.html" className="text-2xl font-bold text-gray-800">Delicious Eats</a>
@@ -15,19 +14,12 @@ export default function Aboutus() {
                 </ul>
             </nav>
         </header>
-        
-        <section className="container mx-auto px-4 py-32">
-            <h1 className="text-4xl font-bold text-center mb-8">About Us</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <img src="https://via.placeholder.com/600x400?text=About+Image" alt="About Image" className="rounded" />
-                </div>
-                <div>
-                    <p className="text-lg mb-4">Delicious Eats was founded in 2010 with a passion for creating memorable dining experiences. Our team of dedicated professionals works tirelessly to bring you the best in culinary delights.</p>
-                    <p className="text-lg mb-4">We believe in sustainability and community involvement, sourcing our ingredients from local farmers and giving back through various initiatives.</p>
-                    <p className="text-lg">Come visit us and taste the difference!</p>
-                </div>
-            </div>
+        {/* 404 Section */}
+        <section className="container mx-auto px-4 py-32 text-center">
+            <h1 className="text-6xl font-bold text-gray-800 mb-4">404</h1>
+            <h2 className="text-3xl font-semibold text-gray-700 mb-6">Page Not Found</h2>
+            <p className="text-lg text-gray-600 mb-8">Sorry, the page you're looking for doesn't exist. It might have been moved or deleted.</p>
+            <a href="index.html" className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded">Return to Home</a>
         </section>
         {/* Footer */}
         <footer className="bg-gray-800 text-white py-8">
