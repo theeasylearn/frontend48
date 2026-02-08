@@ -1,9 +1,0 @@
-1) create nodejs server that accept request for below web page and return receipe 
-        1) home 
-            which should name of receipe as list 
-                pav bhaji, dhokla, pani puri, pulav 
-        2) pavbhaji
-        3) dhokla
-        4) panipuri
-        5) pulav 
-        page 2 to 5 must return receipe using only html
