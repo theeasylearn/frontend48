@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>List in javascript</h1>
+    <b>use console</b>
+    <script>
+        //create static list 
+        let fruits = ["Apple", "Banana", "Mango", "Orange", "Grapes", "Pineapple", "Strawberry", "Papaya", "Watermelon", "Cherry"];
+        console.log(fruits); //display list
+        //display 1st fruit
+        console.log("first fruit",fruits[0]); 
+        console.log("second fruit",fruits[1]); 
+        //push new fruit at end
+        fruits.push("Coconut");
+        //push new fruit at begining
+        fruits.unshift("Avacado");
+        console.log("now fruits has ",fruits);
+        //show length
+        console.log("size of fruits",fruits.length);
+        //remove last item 
+        fruits.pop();
+        console.log("now fruits has ",fruits);
+
+        //remove 1st item 
+        fruits.shift();
+        console.log("now fruits has ",fruits);
+
+        console.log("has this list contains coconut",fruits.includes("coconut"));
+        console.log("has this list contains mango",fruits.includes("Mango"));
+        console.log("position of coconut",fruits.indexOf("coconut"));
+        console.log("position of mango",fruits.indexOf("Mango"));
+        
+    </script>
+</body>
+</html>

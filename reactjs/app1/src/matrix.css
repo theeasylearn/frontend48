@@ -1,0 +1,93 @@
+ body,
+ html {
+     height: 100%;
+     margin: 0;
+     overflow: hidden;
+     background: #000;
+     font-family: 'Orbitron', sans-serif;
+     color: #0f0;
+ }
+
+ /* Matrix Rain Background */
+ canvas#matrix {
+     position: fixed;
+     top: 0;
+     left: 0;
+     z-index: 1;
+ }
+
+ /* Clock Container */
+ .clock-container {
+     position: relative;
+     z-index: 10;
+     height: 100vh;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     text-align: center;
+ }
+
+ .matrix-clock {
+     font-size: 6rem;
+     font-weight: 900;
+     letter-spacing: 10px;
+     text-shadow:
+         0 0 10px #0f0,
+         0 0 20px #0f0,
+         0 0 40px #0f0,
+         0 0 80px #0f0;
+     color: #0f0;
+     padding: 20px 40px;
+     border: 3px solid #0f0;
+     border-radius: 15px;
+     background: rgba(0, 15, 0, 0.4);
+     animation: flicker 4s infinite alternate;
+ }
+
+ .date-text {
+     font-size: 1.8rem;
+     letter-spacing: 5px;
+     margin-top: 20px;
+     text-shadow: 0 0 20px #0f0;
+     opacity: 0.9;
+ }
+
+ /* Flickering Effect */
+ @keyframes flicker {
+
+     0%,
+     19%,
+     21%,
+     23%,
+     25%,
+     60%,
+     62%,
+     64%,
+     70%,
+     100% {
+         opacity: 1;
+         text-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 40px #0f0, 0 0 80px #0f0;
+     }
+
+     20%,
+     22%,
+     24%,
+     61%,
+     63%,
+     65% {
+         opacity: 0.7;
+         text-shadow: 0 0 5px #0f0;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .matrix-clock {
+         font-size: 3.5rem;
+         letter-spacing: 5px;
+         padding: 15px 25px;
+     }
+
+     .date-text {
+         font-size: 1.2rem;
+     }
+ }

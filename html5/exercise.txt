@@ -1,0 +1,5 @@
+1) create pav bhaji recipe using details, summery and figure and figcaption tag and table article, header and footer tag. 
+
+2) create image gallery to show different cricketer images in below format using table, figure, figcaption and image tag 
+https://miro.medium.com/v2/resize:fit:3608/0*og90_m1gsg9iOY7i.png
+

@@ -1,0 +1,8 @@
+Name: Drashti
+Email: drashti@gmail.com
+Mobile: 9876543210
+Story: My first Story
+Name: Drashti
+Email: drashti@gmail.com
+Mobile: 123456789
+Story: hello

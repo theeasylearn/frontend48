@@ -1,0 +1,52 @@
+1) write a program to display your name when user click on button (not submit button)
+
+
+2) write a program to display button (not submit button) when user click on accept language from user (gujarati, hindi, tamli, marathi, punjabi)
+then display message in his language. 
+
+
+3) develop EMI calculator (withtout using submit button)
+4) develop SIP calculator (with using submit button & arrow functions)
+
+5) modify example 14_event_3.html add below features
+    accept player names & their signs 
+    decide winner 
+    reset game when user press new game button.
+
+6) futher modify same example. and develop so player can play against computer 
+
+7) create object using 1st technique to store credit card detail & display it.
+
+8) create template using 2nd technique to store data about Movie. store 
+    Name,generation, duration, star cast, ticket price 
+
+------------------------------------------------------------------------------------
+1) create single level inheritance that has 2 class 
+    kb class 
+        which has construtor for bytes and method getkb() which return KB of bytes 
+    mb class extends kb
+        which has construtor which should call parent class construtor and method getmb() which return MB of bytes 
+    
+2) create multi level inheritance that has 2 class 
+    kb class 
+        which has construtor for bytes and method getkb() which return KB of bytes 
+    mb class extends kb
+        which has construtor which should call parent class construtor and method getmb() which return MB of bytes 
+    gb class extends gb
+        which has construtor which should call parent class construtor and method getgb() which return GB of bytes 
+    tb class extends gb
+        which has construtor which should call parent class construtor and method getTB() which return TB of bytes 
+    
+map & Filter (use bootstrap)
+-----------------------------------
+1) create web page which should display all football playing nations using array & Object & map function 
+Name, Contient, Flag Image, year of winning world cup 
+
+2) extend above example provide text box  to type name of Contient and filter list using filter function
+
+3) create web page which should display bouse route, display source, destination, Bus departure time, journey type(Express/AC/sleeper) using array & Object & map function 
+
+4) extend above example provide 2 text box to type source & destination and filter list using filter function
+
+
+

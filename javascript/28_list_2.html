@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>sort, map, filter</h1>
+    <table border="1" align="center" width="80%">
+        <tr>
+            <td width="25%">
+                <h2>unsorted list</h2>
+                <ol id="list1"></ol>
+            </td>
+            <td width="25%">
+                <h2>sorted list</h2>
+                <ol id="list2"></ol>
+            </td>
+            <td width="25%">
+                <h2>Filtered List</h2>
+                <ol id="list3"></ol>
+            </td>
+            <td width="25%">
+                <h2></h2>
+            </td>
+        </tr>
+    </table>
+    <script>
+        var states = ["Goa", "Assam", "Karnataka", "Punjab", "Maharashtra", "Sikkim", "Odisha", "Kerala", "Rajasthan", "Bihar", "Gujarat", "Tamil Nadu", "Telangana", "Uttar Pradesh", "Madhya Pradesh", "Haryana", "Jharkhand", "Chhattisgarh", "Himachal Pradesh", "Uttarakhand", "West Bengal", "Andhra Pradesh", "Arunachal Pradesh", "Meghalaya", "Manipur", "Mizoram", "Nagaland", "Tripura"];
+        //console.log(states);
+        let size = states.length;
+        let temp = ``;
+
+        for (let index = 0; index < size; index++) {
+            temp = temp + `<li>${states[index]}</li>`;
+        }
+        document.getElementById('list1').innerHTML = temp;
+
+        states.sort();
+        // console.log(states);
+
+        //now we map function
+        temp = ``;
+        states.map((item) => {
+            console.log(item);
+            temp = temp + `<li>${item}</li>`;
+        });
+        document.getElementById('list2').innerHTML = temp;
+
+        //let us  filter list
+        let filteredStates = states.filter((item) => {
+            if (item.endsWith('desh') === true)
+                return item;
+        });
+        console.log(filteredStates);
+        temp = ``;
+        filteredStates.map((item) => {
+            temp = temp + `<li>${item}</li>`;
+        });
+        document.getElementById('list3').innerHTML = temp;
+        // now filter state whose name ends with and
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>es6 spread operator</h1>
+    <div id="one">
+
+    </div>
+    <div id="two"></div>
+    <div id="three"></div>
+    <script>
+        //create list 
+        var list1 = [10, 20, 30];
+        var list2 = [40, 50, 60];
+        var list3 = [...list1, ...list2];
+        var temp = '';
+        list3.map((item) => {
+            temp += `<p>${item}</p>`;
+        });
+        document.getElementById('one').innerHTML = temp;
+
+        const car1 = {
+            brand: "Tata",
+            model: "Nexon",
+            year: 2024,
+            price: 900000,
+            fuelType: "Petrol", // different property
+            tyre:'Radial'
+        };
+
+        // Car 2
+        const car2 = {
+            brand: "Mahindra",
+            model: "XUV700",
+            year: 2024,
+            price: 1600000,
+            color: "Red", // different property
+            automatic: "Fully automatic",
+            heatedSeat: true,
+            sound: 'Herman sound system'
+        };
+
+        console.log(car1);
+        console.log(car2);
+        //es6 spread operator on car1 and car2
+        var newCar = { ...car1, ...car2 };
+        console.log(newCar);
+
+        var garage = [];
+        garage.push(car1); //one way to insert object into list at end
+        garage = [...garage, car2];
+        let line = ``;
+        garage.map((item) => {
+            //let {brand,model,year,price} = item;
+            //for each loop 
+            let temp = ``;
+            for (let key in item) {
+                temp += `<b>${key}</b> = ${item[key]} `;
+            }
+            line = line + "<p>" + temp + "</p>";
+        });
+        document.getElementById('three').innerHTML = line;
+    </script>
+</body>
+
+</html>

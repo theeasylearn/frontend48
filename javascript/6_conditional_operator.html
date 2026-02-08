@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Conditional operator</h1>
+    <script>
+        //create variable to store html code 
+        var cartoon = `<table border="1" cellpadding="8">
+  <tr>
+    <td>Chhota Bheem</td>
+    <td>Motu Patlu</td>
+    <td>Doraemon</td>
+    <td>Shinchan</td>
+    <td>Oggy and the Cockroaches</td>
+  </tr>
+  <tr>
+    <td>Ninja Hattori</td>
+    <td>Little Singham</td>
+    <td>Roll No 21</td>
+    <td>Pakdam Pakdai</td>
+    <td>Kris</td>
+  </tr>
+  <tr>
+    <td>Bandbudh Aur Budbak</td>
+    <td>Golmaal Jr.</td>
+    <td>Chorr Police</td>
+    <td>Keymon Ache</td>
+    <td>Shaktimaan Animated</td>
+  </tr>
+  <tr>
+    <td>Andy Pirki</td>
+    <td>Rudra</td>
+    <td>Gattu Battu</td>
+    <td>Vir: The Robot Boy</td>
+    <td>Akbar Birbal</td>
+  </tr>
+</table>`;
+        var horror = `<table border="1" cellpadding="8">
+  <tr>
+    <td>Aahat</td>
+    <td>Zee Horror Show</td>
+    <td>Fear Files: Darr Ki Sacchi Tasvirein</td>
+    <td>Darr Sabko Lagta Hai</td>
+    <td>Anhonee</td>
+  </tr>
+  <tr>
+    <td>Shh... Koi Hai</td>
+    <td>Vikraal Aur Gabraal</td>
+    <td>Raat Hone Ko Hai</td>
+    <td>Kya Haadsa Kya Haqeeqat</td>
+    <td>Anjaane</td>
+  </tr>
+  <tr>
+    <td>Kaun Hai?</td>
+    <td>Dastaan-E-Horror</td>
+    <td>Khauf</td>
+    <td>Rooh</td>
+    <td>Woh</td>
+  </tr>
+  <tr>
+    <td>Hoshiarpur Ki Haweli</td>
+    <td>Dar Ka Darwaza</td>
+    <td>Thriller at 10</td>
+    <td>Black</td>
+    <td>Mano Ya Na Mano</td>
+  </tr>
+</table>`;
+    var age = parseInt(prompt("Enter your age",1));
+    // if(age < 18)
+    // {
+    //     document.write(cartoon);   
+    // }
+    // else 
+    // {
+    //     document.write(horror);
+    // }
+    // OR 
+    document.write((age<18)?cartoon:horror);
+    </script>
+</body>
+
+</html>

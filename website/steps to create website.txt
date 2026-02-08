@@ -1,0 +1,40 @@
+1) findout website similier to website you are developing. 
+2) make list of website for future references 
+    1) https://mmatigers.com/
+    2) https://www.kajkarate.com
+
+3) findout templates on interest 
+4) download premium templates using httrack
+5) make list of pages in website 
+    Home
+        Slider 
+            1) importance about Karate Training
+            2) training center 
+            3) Achievements 
+        Introduction 
+        Our Services 
+        Our instructor 
+        Our Programs
+        Milestone 
+        Customer Testimonials 
+        Footer  
+    About us 
+        https://www.kajkarate.com/about-academy
+    Services 
+        Service Name 
+        Service Photo 
+    Service Detail 
+    Programs
+    https://mmatigers.com/aga-program.php?    
+    Events
+        Seminar 
+        Camp
+        tournaments
+    Instructor
+        https://www.kajkarate.com/instructors
+    Gallary
+        Photo 
+        Videos
+    Contact us 
+
+6) copy download theme into website folder

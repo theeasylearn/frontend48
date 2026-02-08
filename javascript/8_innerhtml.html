@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .highlight {
+            background-color: aliceblue;
+            color: blue;
+            font-size: xx-large;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>InnerHTML property in javascript</h1>
+    <table border="1" width="100%">
+        <tr>
+            <td>
+                <input type="button" value="display RastraGeet" onclick="showRastraGeet();" />
+            </td>
+            <td>
+                <input type="button" value="display RastraGaan" onclick="showRastraGaan();" />
+            </td>
+            <td>
+                <input type="button" value="apply Class" onclick="applyClass();" />
+                <input type="button" value="Remove Class" onclick="removeClass();" />
+                <input type="button" value="toggle Class" onclick="toggleClass();" />
+                <input type="button" value="Apply Effect (bold,text align center)" onclick="applyStyle();" />
+            </td>
+
+        </tr>
+        <tr>
+            <td id="td1">output will be displayed here</td>
+            <td id="td2">output will be displayed here</td>
+            <td id="td3">output will be displayed here</td>
+        </tr>
+    </table>
+    <script>
+        //create user defined function 
+        function showRastraGeet() {
+
+            let lyrics = `वन्दे मातरम्। <br/>
+                        सुजलां सुफलां मलयजशीतलाम्, <br/>
+                        शस्यश्यामलां मातरम्। <br/>
+                        वन्दे मातरम्। <br/>
+<br/>
+                        शुभ्रज्योत्स्नापुलकितयामिनीम्,<br/>
+                        फुल्लकुसुमितद्रुमदलशोभिनीम्,<br/>
+                        सुहासिनीं सुमधुर भाषिणीम्,<br/>
+                        सुखदां वरदां मातरम्।<br/>
+                        वन्दे मातरम्।<br/>`;
+            document.getElementById('td1').innerHTML = lyrics;
+        }
+
+        function showRastraGaan() {
+            let lyrics = `जन गण मन अधिनायक जय हे, <br/> 
+            भारत भाग्य विधाता। <br/> 
+            पंजाब सिन्धु गुजरात मराठा, <br/> 
+            द्राविड़ उत्कल बंगा। <br/> 
+            विंध्य हिमाचल यमुना गंगा, <br/> 
+            उच्छल जलधि तरंगा। <br/> 
+            तव शुभ नामे जागे, <br/> 
+            तव शुभ आशिष मांगे, <br/> 
+            गाहे तव जय गाथा। <br/> 
+            जन गण मंगलदायक जय हे, <br/> 
+            भारत भाग्य विधाता। <br/> 
+            जय हे, जय हे, जय हे, <br/> 
+            जय जय जय जय हे। <br/> `;
+            document.getElementById('td2').innerHTML = lyrics;
+        }
+        function applyClass()
+        {
+            document.getElementById('td1').className = 'highlight';
+            document.getElementById('td2').className = 'highlight';
+        }
+        function removeClass()
+        {
+            document.getElementById('td1').className ='';
+            document.getElementById('td2').className ='';
+        }
+        function toggleClass()
+        {
+            document.getElementById('td1').classList.toggle('highlight');
+            document.getElementById('td2').classList.toggle('highlight');
+        }
+        function applyStyle()
+        {
+            document.getElementById('td1').style="font-weight:bold;text-align:center";
+            document.getElementById('td2').style="font-weight:bold;text-align:center";
+        }
+    </script>
+</body>
+
+</html>

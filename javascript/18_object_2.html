@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>2nd technique to create object</h1>
+    <table border="1" width="80%" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Weight</th>
+                <th>Quantity</th>
+                <th>Price per gram</th>
+            </tr>
+        </thead>
+        <tbody id="shop"></tbody>
+    </table>
+    <script>
+        var Product = new Object({
+            name:'',
+            price:0,
+            weight:0.0,
+            quantity:0,
+            display: function(){
+                let pricePerGram = this.price / this.quantity;
+                document.getElementById('shop').innerHTML += `<tr>
+                    <td>${this.name}</td>
+                    <td>${this.price}</td>
+                    <td>${this.weight}</td>
+                    <td>${this.quantity}</td>
+                    <td>${pricePerGram}</td>
+                    </tr>`;
+            }
+        });
+
+        //create object variable
+        var p1 = Product;
+        p1.name = "IPhone 16 pro max";
+        p1.price = 1000;
+        p1.weight = '500gram';
+        p1.quantity = 10;
+        p1.display();
+
+        var p2 = Product;
+        p2.name = "Kawasaki Ninja";
+        p2.price = 10000;
+        p2.weight = '500 kg';
+        p2.quantity = 3;
+        p2.display();
+    </script>
+</body>
+</html>
