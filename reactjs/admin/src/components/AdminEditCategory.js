@@ -1,0 +1,115 @@
+import React from "react";
+import Menu from "./Menu";
+
+export default function AdminEditCategory() {
+  return (
+    <>
+      <div id="wrapper">
+        {/* Sidebar */}
+        <Menu />
+        <div id="content-wrapper" className="d-flex flex-column">
+          <div id="content">
+            <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+              {/* Sidebar Toggle (Topbar) */}
+              <button
+                id="sidebarToggleTop"
+                className="btn btn-link d-md-none rounded-circle mr-3"
+              >
+                <i className="fa fa-bars" />
+              </button>
+              {/* Topbar Navbar */}
+            </nav>
+            {/* End of Topbar */}
+            {/* Begin Page Content */}
+            <div className="container-fluid mt-3">
+              {/* Page Heading */}
+              <h4 className="text-dark font-weight-bold">
+                Edit - Category Management
+              </h4>
+              {/* DataTales Example */}
+              <div className="card shadow mb-4">
+                <div className="card-header py-3 d-flex justify-content-between">
+                  <h5 className="m-0 text-dark">Edit category</h5>
+                  <a href="category.html" className="btn btn-primary">
+                    Back
+                  </a>
+                </div>
+                <div className="card-body">
+                  <form action="" method="post">
+                    <div className="row">
+                      <div className="col-lg-9">
+                        <div className="mb-3">
+                          <label htmlFor="title" className="form-label">
+                            EditTitle
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="title"
+                            required=""
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label htmlFor="photo" className="form-label">
+                            Change Photo
+                          </label>
+                          <input
+                            type="file"
+                            className="form-control"
+                            id="photo"
+                            required=""
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label htmlFor="title" className="form-label">
+                            Edit Description
+                          </label>
+                          <textarea
+                            className="form-control"
+                            id="description"
+                            required=""
+                            defaultValue={"                                    "}
+                          />
+                        </div>
+                        <div className="d-flex justify-content-end">
+                          <input
+                            type="submit"
+                            className="btn btn-primary"
+                            defaultValue="Save changes"
+                          />
+                          &nbsp;
+                          <input
+                            type="submit"
+                            className="btn btn-dark"
+                            defaultValue="clear"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-lg-3">
+                        <b>Existing Photo</b>
+                        <img src="http://picsum.photos/200" className="img-fluid" />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {/* /.container-fluid */}
+          </div>
+          {/* End of Main Content */}
+          {/* Footer */}
+          <footer className="sticky-footer bg-white">
+            <div className="container my-auto">
+              <div className="copyright text-center my-auto">
+                <span>Copyright © Your Website 2025</span>
+              </div>
+            </div>
+          </footer>
+          {/* End of Footer */}
+        </div>
+        {/* End of Content Wrapper */}
+      </div>
+
+    </>
+  );
+}
