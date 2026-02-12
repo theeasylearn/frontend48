@@ -1,9 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";  // Add this import
 import Menu from "./Menu";
 import axios from 'axios'; //api call 
 //api calling means fetching data from remote location (mostly web page that returns data in json format)
+//
 export default function AdminCategory() {
+    //create state array
+    let [data, setData] = useState([]);
+
     //hook 
     useEffect(() => {
         //code we write in this hook execute only once after functional component is loaded
@@ -15,6 +19,36 @@ export default function AdminCategory() {
             responseType: 'json'
         }).then((response) => {
             console.log(response);
+            //response object has data property which contains data received from api in this case data is 
+            /*
+                data is list of object (JSON)
+                [
+                 0 {"error":"no"},
+                 1 {"total":7},
+                 2 {"id":"1","title":"laptop","photo":"laptop.jpg","islive":"1","isdeleted":"0"},
+                 3 {"id":"2","title":"mobile","photo":"mobile.jpg","islive":"1","isdeleted":"0"},
+                 4 {"id":"3","title":"book","photo":"books.jpg","islive":"1","isdeleted":"0"},
+                 5 {"id":"4","title":"Cookies & waffers","photo":"Cookies.jpg","islive":"1","isdeleted":"0"},{"id":"5","title":"Washing Powders","photo":"washing_powders.jpg","islive":"1","isdeleted":"0"},{"id":"6","title":"shampoo","photo":"shampoo.jpg","islive":"1","isdeleted":"0"},{"id":"39","title":"drill machine","photo":"WhatsApp Image 2026-01-25 at 1.25.28 PM.jpeg","islive":"1","isdeleted":"0"}]
+            */
+            // FETCH ERROR KEY VALUE FROM 0th element object
+            let error = response.data[0]['error'];
+            //check if api has any error or not 
+            if (error !== 'no') {
+                alert(error)
+            }
+            else {
+                //no error 
+                //now fetch 1st object's total key's value 
+                let total = response.data[1]['total'];
+                if (total === 0) {
+                    alert("no category found");
+                }
+                else {
+                    //delete 2 object from beginning because it is not data
+                    response.data.splice(0, 2);
+                    setData(response.data);
+                }
+            }
         }).catch((error) => {
             console.log(error);
         })
@@ -89,43 +123,40 @@ export default function AdminCategory() {
                                                         <th>id</th>
                                                         <th>Title</th>
                                                         <th>Photo</th>
-                                                        <th>Detail</th>
+                                                       
                                                         <th>is live</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Phone</td>
-                                                        <td width="20%">
-                                                            <img
-                                                                src="https://picsum.photos/100"
-                                                                alt=""
-                                                                className="img-fluid"
-                                                            />
-                                                        </td>
-                                                        <td>
-                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                            Eum ea fugit iste est! Eum beatae fuga ipsam temporibus
-                                                            culpa, id sunt dignissimos. Numquam natus tenetur
-                                                            repellat quidem reiciendis, dicta eligendi.
-                                                        </td>
-                                                        <td>Yes</td>
-                                                        <td width="15%">
-                                                            {/* Replaced Edit button - will need dynamic ID in real data */}
-                                                            <Link
-                                                                to="/edit-category/1"  // Use :categoryid from actual data
-                                                                className="btn btn-warning btn-sm"
-                                                            >
-                                                                Edit
-                                                            </Link>
-                                                            &nbsp;
-                                                            <a href="#" className="btn btn-danger btn-sm">
-                                                                Delete
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    {data.map((item) => {
+                                                        return (<tr>
+                                                            <td>{item.id}</td>
+                                                            <td>{item.title}</td>
+                                                            <td width="20%">
+                                                                <img
+                                                                    src="https://picsum.photos/100"
+                                                                    alt=""
+                                                                    className="img-fluid"
+                                                                />
+                                                            </td>
+                                                            
+                                                            <td>{item.islive == '1'?"Yes":"No"}</td>
+                                                            <td width="15%">
+                                                                {/* Replaced Edit button - will need dynamic ID in real data */}
+                                                                <Link
+                                                                    to="/edit-category/1"  // Use :categoryid from actual data
+                                                                    className="btn btn-warning btn-sm"
+                                                                >
+                                                                    Edit
+                                                                </Link>
+                                                                &nbsp;
+                                                                <a href="#" className="btn btn-danger btn-sm">
+                                                                    Delete
+                                                                </a>
+                                                            </td>
+                                                        </tr>);
+                                                    })}
                                                 </tbody>
                                             </table>
                                         </div>

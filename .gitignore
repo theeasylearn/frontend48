@@ -1,3 +1,5 @@
 nodejs/node_modules
 test/
 reactjs/app1/node_modules
+reactjs/app2/node_modules
+reactjs/admin/node_modules
