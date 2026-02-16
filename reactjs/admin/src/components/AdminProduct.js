@@ -1,10 +1,95 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";  // Add this import
+import axios from 'axios'; //api call 
+import { ToastContainer } from 'react-toastify';
+import { showError, showMessage } from "./message";
+import { getBaseImage, getBaseUrl } from "./common";
 
 export default function AdminProduct() {
+    let [data, setData] = useState([]);
+    //create function inside function 
+    let displayProduct = function (item) {
+        return (<tr>
+            <td>{item.id}</td>
+            <td>
+                {/* Product name link replaced - remove target="_blank" for SPA */}
+                <Link
+                    to="/view-product/1"
+                    className="text-decoration-none"
+                >
+                    {item.title} <br />
+                    {item.categorytitle}
+                </Link>
+            </td>
+            <td>{item.price}</td>
+            <td>
+                <img
+                    src={getBaseImage() + "product/" + item.photo}
+                    className="img-fluid"
+                />
+            </td>
+            <td>{item.stock}</td>
+            <td>{(item.islive === '1') ? "Yes":"No"}</td>
+            <td>
+                {/* Edit button replaced */}
+                <Link
+                    to="/edit-product/1"
+                    className="btn btn-warning btn-sm btn-block mb-1"
+                >
+                    Edit
+                </Link>
+                <a href="#" className="btn btn-danger btn-sm btn-block">
+                    Delete
+                </a>
+            </td>
+        </tr>)
+    }
+    useEffect(() => {
+        if (data.length == 0) {
+            let apiAddress = getBaseUrl() + "product.php";
+            axios({
+                url: apiAddress,
+                method: 'get',
+                responseType: 'json'
+            }).then((response) => {
+                console.log(response);
+                //response object has data property which contains data received from api in this case data is 
+                /*
+                    data is list of object (JSON)
+                   [{"error":"no"},{"total":5},
+                   {"id":"1","categoryid":"1","title":"Acer Laptop","price":"100","stock":"66","weight":"1000","size":"15 inch","photo":"acer.jpg","detail":"WINDOWS 10 4 GB DDR3 RAM 128 gb ssd hard disk","islive":"1","isdeleted":"0","categorytitle":"laptop"},{"id":"2","categoryid":"1","title":"dell laptop","price":"200","stock":"69","weight":"1000","size":"15 inch","photo":"dell.jpg","detail":"WINDOWS 10 8 GB DDR3 RAM 512 gb ssd hard disk","islive":"1","isdeleted":"0","categorytitle":"laptop"},{"id":"3","categoryid":"2","title":"IPhone 15","price":"125000","stock":"3","weight":"1000","size":"big","photo":"Untitled.jpeg","detail":"seal packed finished product","islive":"1","isdeleted":"0","categorytitle":"mobile"},{"id":"5","categoryid":"4","title":"cake biscuit","price":"867","stock":"5","weight":"1000","size":"small","photo":"1.jpeg","detail":"very testy sweet ","islive":"1","isdeleted":"0","categorytitle":"Cookies & waffers"},{"id":"6","categoryid":"6","title":"one shampoo","price":"500","stock":"43","weight":"1000","size":"small","photo":"shampoo.jpg","detail":"clinic plus shampoo","islive":"1","isdeleted":"0","categorytitle":"shampoo"}]
+                */
+                // FETCH ERROR KEY VALUE FROM 0th element object
+                let error = response.data[0]['error'];
+                //check if api has any error or not 
+                if (error !== 'no') {
+                    // alert(error)
+                    showError(error);
+                }
+                else {
+                    //no error 
+                    //now fetch 1st object's total key's value 
+                    let total = response.data[1]['total'];
+                    if (total === 0) {
+                        showError("no product found");
+                    }
+                    else {
+                        showMessage("product fetched...");
+                        //delete 2 object from beginning because it is not data
+                        response.data.splice(0, 2);
+                        setData(response.data);
+                    }
+                }
+            }).catch((error) => {
+                // alert("either you are offline or server is offline");
+                showError("either you are offline or server is offline");
+            })
+        }
+    });
     return (
         <>
             <div id="wrapper">
+                <ToastContainer />
                 {/* Sidebar - All links replaced */}
                 <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
                     {/* Sidebar - Brand */}
@@ -123,47 +208,14 @@ export default function AdminProduct() {
                                                         <th>Sr No</th>
                                                         <th>Product</th>
                                                         <th>Price</th>
-                                                        <th>Photo</th>
+                                                        <th width='30%'>Photo</th>
                                                         <th>Stock</th>
                                                         <th>is Live?</th>
                                                         <th>Operation</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            {/* Product name link replaced - remove target="_blank" for SPA */}
-                                                            <Link
-                                                                to="/view-product/1"
-                                                                className="text-decoration-none"
-                                                            >
-                                                                IPhone - 14 <br />
-                                                                Phone
-                                                            </Link>
-                                                        </td>
-                                                        <td>125000</td>
-                                                        <td>
-                                                            <img
-                                                                src="http://picsum.photos/100"
-                                                                className="img-fluid"
-                                                            />
-                                                        </td>
-                                                        <td>100</td>
-                                                        <td>Yes</td>
-                                                        <td>
-                                                            {/* Edit button replaced */}
-                                                            <Link
-                                                                to="/edit-product/1"
-                                                                className="btn btn-warning btn-sm btn-block mb-1"
-                                                            >
-                                                                Edit
-                                                            </Link>
-                                                            <a href="#" className="btn btn-danger btn-sm btn-block">
-                                                                Delete
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    {data.map((item) => displayProduct(item))}
                                                 </tbody>
                                             </table>
                                         </div>

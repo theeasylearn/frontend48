@@ -4,6 +4,7 @@ import Menu from "./Menu";
 import axios from 'axios'; //api call 
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
+import { getBaseImage, getBaseUrl } from "./common";
 //api calling means fetching data from remote location (mostly web page that returns data in json format)
 //
 export default function AdminCategory() {
@@ -13,7 +14,7 @@ export default function AdminCategory() {
     //hook 
     useEffect(() => {
         if (data.length == 0) {
-            let apiAddress = "https://theeasylearnacademy.com/shop/ws/category.php";
+            let apiAddress = getBaseUrl() + "category.php";
             axios({
                 url: apiAddress,
                 method: 'get',
@@ -143,7 +144,7 @@ export default function AdminCategory() {
                                                             <td>{item.id}</td>
                                                             <td>{item.title}</td>
                                                             <td width="20%">
-                                                                <img src={"https://theeasylearnacademy.com/shop/images/category/" + item.photo} className="img-fluid" />
+                                                                <img src={getBaseImage() +  "category/" + item.photo} className="img-fluid" />
                                                             </td>
 
                                                             <td>{item.islive == '1' ? "Yes" : "No"}</td>
