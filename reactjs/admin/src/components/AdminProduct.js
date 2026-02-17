@@ -14,7 +14,7 @@ export default function AdminProduct() {
             <td>
                 {/* Product name link replaced - remove target="_blank" for SPA */}
                 <Link
-                    to="/view-product/1"
+                    to={"/view-product/" + item.id}
                     className="text-decoration-none"
                 >
                     {item.title} <br />

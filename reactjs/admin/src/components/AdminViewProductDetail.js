@@ -1,11 +1,64 @@
-import React from "react";
-import { Link } from "react-router-dom";  // Add this import
+import React, { useEffect, useState } from "react";
 import Menu from "./Menu";
+import { Link, useParams } from "react-router-dom";  // Add this import
+import axios from 'axios'; //api call 
+import { ToastContainer } from 'react-toastify';
+import { showError, showMessage } from "./message";
+import { getBaseImage, getBaseUrl } from "./common";
 
 export default function AdminViewProductDetails() {
+    let [data, setData] = useState([]);
+    let { productid } = useParams();
+    //hook 
+    useEffect(() => {
+        if (data.length == 0) {
+            let apiAddress = getBaseUrl() + "product.php?productid=" + productid;
+            console.log(apiAddress);
+            axios({
+                url: apiAddress,
+                method: 'get',
+                responseType: 'json'
+            }).then((response) => {
+                console.log(response);
+                //response object has data property which contains data received from api in this case data is 
+                /*
+                    data is list of object (JSON)
+                   [{"error":"no"},{"total":1},{"id":"1","categoryid":"1","title":"Acer Laptop","price":"100","stock":"66","weight":"1000","size":"15 inch","photo":"acer.jpg","detail":"WINDOWS 10 4 GB DDR3 RAM 128 gb ssd hard disk","islive":"1","isdeleted":"0","categorytitle":"laptop"}]
+                */
+                // FETCH ERROR KEY VALUE FROM 0th element object
+                let error = response.data[0]['error'];
+                //check if api has any error or not 
+                if (error !== 'no') {
+                    // alert(error)
+                    showError(error);
+                }
+                else {
+                    //no error 
+                    //now fetch 1st object's total key's value 
+                    let total = response.data[1]['total'];
+                    if (total === 0) {
+                        showError("no category found");
+                    }
+                    else {
+                        showMessage("Product fetched...");
+                        //delete 2 object from beginning because it is not data
+                        response.data.splice(0, 2);
+                        setData(response.data);
+                    }
+                }
+            }).catch((error) => {
+                // alert("either you are offline or server is offline");
+                showError("either you are offline or server is offline");
+            })
+        }
+        //code we write in this hook execute only once after functional component is loaded
+        //generally it is used to call API, fetch data and store into into state
+
+    })
     return (
         <>
             <div id="wrapper">
+                <ToastContainer />
                 {/* Sidebar */}
                 <Menu />
                 {/* End of Sidebar */}
@@ -68,70 +121,70 @@ export default function AdminViewProductDetails() {
                                             </Link>
                                         </div>
                                         <div className="card-body">
-                                            <table className="table table-bordered">
-                                                <tbody>
-                                                    <tr>
-                                                        <td width="25%">
-                                                            <img
-                                                                src="http://picsum.photos/400"
-                                                                className="img-fluid"
-                                                            />
-                                                        </td>
-                                                        <td>
-                                                            <table className="table table-striped table-sm">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>Name</td>
-                                                                        <td>IPhone - 15</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Category</td>
-                                                                        <td>Phone</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Price</td>
-                                                                        <td>125000</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Stock</td>
-                                                                        <td>10</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Weight</td>
-                                                                        <td>500</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Size</td>
-                                                                        <td>Medium</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Detail</td>
-                                                                        <td>
-                                                                            Lorem ipsum dolor sit amet consectetur
-                                                                            adipisicing elit. Ea numquam voluptas tempora
-                                                                            eaque repudiandae cumque tenetur rerum culpa est
-                                                                            minima, perferendis dolorum nobis labore
-                                                                            repellat ad officia fugit sequi earum.
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Is Live</td>
-                                                                        <td>Yes</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td />
-                                                                        <td />
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td />
-                                                                        <td />
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            {data.map((item) => {
+                                                return (<table className="table table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="25%">
+                        <img
+                            src={getBaseImage() + "product/" + item.photo}
+                            className="img-fluid"
+                        />
+                                                            </td>
+                                                            <td>
+                                                                <table className="table table-striped table-sm">
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>Name</td>
+                                                                            <td>{item.title}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Category</td>
+                                                                            <td>{item.categorytitle}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Price</td>
+                                                                            <td>{item.price}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Stock</td>
+                                                                            <td>{item.stock}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Weight</td>
+                                                                            <td>{item.weight}</td>
+                                                                       </tr>
+                                                                        <tr>
+                                                                            <td>Size</td>
+                                                                            <td>{item.size}</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Detail</td>
+                                                                            <td>
+                                                                               {item.detail}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Is Live</td>
+                                                                            <td>
+                            {(item.islive === '1') ? "Yes":"No"}
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td />
+                                                                            <td />
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td />
+                                                                            <td />
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>);
+                                            })}
                                         </div>
                                     </div>
                                 </div>

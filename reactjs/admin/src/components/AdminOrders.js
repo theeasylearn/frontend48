@@ -1,11 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";  // Add this import
 import Menu from "./Menu";
+import axios from 'axios'; //api call 
+import { ToastContainer } from 'react-toastify';
+import { showError, showMessage } from "./message";
+import { getBaseUrl } from "./common";
 
 export default function AdminOrders() {
+    //create state array
+    let [data, setData] = useState([]);
+
+    //hook 
+    useEffect(() => {
+        if (data.length == 0) {
+            let apiAddress = getBaseUrl() + "orders.php";
+            axios({
+                url: apiAddress,
+                method: 'get',
+                responseType: 'json'
+            }).then((response) => {
+                console.log(response);
+                //response object has data property which contains data received from api in this case data is 
+
+                // [{"error":"no"},{"total":33},{"billdate":"17-10-2025","orderstatus":"1","id":"35","fullname":"patel ankit","address1":"eva surbhi opp aksharwadi temple","address2":"waghawadi road","city":"bhavnagar","pincode":"364001","amount":"400"}]
+
+                // FETCH ERROR KEY VALUE FROM 0th element object
+                let error = response.data[0]['error'];
+                //check if api has any error or not 
+                if (error !== 'no') {
+                    // alert(error)
+                    showError(error);
+                }
+                else {
+                    //no error 
+                    //now fetch 1st object's total key's value 
+                    let total = response.data[1]['total'];
+                    if (total === 0) {
+                        showError("no category found");
+                    }
+                    else {
+                        showMessage("orders fetched...");
+                        //delete 2 object from beginning because it is not data
+                        response.data.splice(0, 2);
+                        setData(response.data);
+                    }
+                }
+            }).catch((error) => {
+                // alert("either you are offline or server is offline");
+                showError("either you are offline or server is offline");
+            })
+        }
+        //code we write in this hook execute only once after functional component is loaded
+        //generally it is used to call API, fetch data and store into into state
+
+    })
+    function displayOrder(item) {
+        return (<tr>
+            <td>{item.id}</td>
+            <td>{item.billdate}</td>
+            <td>{item.amount}</td>
+            <td>
+                {item.city} <br /> {item.pincode}
+            </td>
+            <td>Confirmed</td>
+            <td>
+                {/* Replaced View button: admin-view-order-detail.html → /view-order/1 */}
+                <Link
+                    to="/view-order/1"
+                    className="btn btn-primary"
+                >
+                    View
+                </Link>
+            </td>
+        </tr>);
+    }
     return (
         <>
             <div id="wrapper">
+                <ToastContainer />
                 {/* Sidebar */}
                 <Menu />
                 {/* End of Sidebar */}
@@ -71,24 +143,7 @@ export default function AdminOrders() {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Fri 09-08-2024</td>
-                                                        <td>95214</td>
-                                                        <td>
-                                                            Bhavnagar <br /> 364001
-                                                        </td>
-                                                        <td>Confirmed</td>
-                                                        <td>
-                                                            {/* Replaced View button: admin-view-order-detail.html → /view-order/1 */}
-                                                            <Link
-                                                                to="/view-order/1"
-                                                                className="btn btn-primary"
-                                                            >
-                                                                View
-                                                            </Link>
-                                                        </td>
-                                                    </tr>
+                                    {data.map((item) => displayOrder(item))}
                                                 </tbody>
                                             </table>
                                         </div>
