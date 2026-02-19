@@ -1,11 +1,56 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";  // Add this import
 import Menu from "./Menu";
+import axios from 'axios'; //api call 
+import { ToastContainer } from 'react-toastify';
+import { showError, showMessage } from "./message";
+import { getBaseImage, getBaseUrl } from "./common";
 
 export default function AdminViewOrderDetails() {
+    let { orderid } = useParams();
+    let [data, setData] = useState([]);
+    let [selectedStatus, setSelectedStatus] = useState(null); // New state for status
+
+    // Hook
+    useEffect(() => {
+        let apiAddress = getBaseUrl() + "orders.php?id=" + orderid;
+        console.log(apiAddress);
+        axios({
+            url: apiAddress,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            console.log(response);
+            let error = response.data[0]['error'];
+            if (error !== 'no') {
+                showError(error);
+            } else {
+                let total = response.data[1]['total'];
+                if (total === 0) {
+                    showError("no orders found");
+                } else {
+                    showMessage("orders fetched...");
+                    response.data.splice(0, 2);
+                    const fetchedData = response.data;
+                    setData(fetchedData);
+                    // Set status state after data is ready
+                    const orderStatus = parseInt(fetchedData[0]['orderstatus']);
+                    if (!isNaN(orderStatus) && orderStatus >= 0 && orderStatus <= 3) {
+                        setSelectedStatus(orderStatus.toString()); // Store as string to match option values
+                    } else {
+                        setSelectedStatus(null); // Or default to "0" if invalid
+                    }
+                }
+            }
+        }).catch((error) => {
+            showError("either you are offline or server is offline");
+        });
+    }, []); // Empty deps: run once on mount
+
     return (
         <>
             <div id="wrapper">
+                <ToastContainer />
                 {/* Sidebar - All 8 links replaced */}
                 <Menu />
                 {/* End of Sidebar */}
@@ -73,67 +118,66 @@ export default function AdminViewOrderDetails() {
                                             </span>
                                         </div>
                                         <div className="card-body">
-                                            {/* Order details table unchanged - no navigation links */}
-                                            <table className="table table-sm table-striped table-bordered">
-                                                <tbody>
-                                                    <tr>
-                                                        <td width="25%">Name</td>
-                                                        <td width="25%">Ankit Patel</td>
-                                                        <td width="25%">Date</td>
-                                                        <td width="25%">Fri 09-08-2024</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Address</td>
-                                                        <td>
-                                                            eva surbhi, opp akshwarwadi <br />
-                                                            Waghwadi road, bhavnagar
-                                                        </td>
-                                                        <td>Bill No</td>
-                                                        <td>125</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Pincode</td>
-                                                        <td>364001</td>
-                                                        <td>Delivery Status</td>
-                                                        <td>
-                                                            <form action="">
-                                                                <select
-                                                                    className="form-control"
-                                                                    name="orderstatus"
-                                                                    id="orderstatus"
-                                                                >
-                                                                    <option value="">Select</option>
-                                                                    <option value="">Confirmed</option>
-                                                                    <option value="">Dispatched</option>
-                                                                    <option value="">Delivered</option>
-                                                                    <option value="">Canceled</option>
-                                                                </select>
-                                                                <input
-                                                                    type="submit"
-                                                                    defaultValue="save"
-                                                                    className="btn btn-primary w-100 mt-1"
-                                                                />
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Mobile</td>
-                                                        <td>1234567890</td>
-                                                        <td>Payment Status</td>
-                                                        <td>Online</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colSpan={1}>Remarks</td>
-                                                        <td colSpan={3}>
-                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                            Illo possimus maxime debitis! Atque doloribus laborum
-                                                            similique officia deleniti delectus velit, et
-                                                            consequatur provident quas, ex sequi necessitatibus a
-                                                            tenetur? Culpa.
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            {data.map((item) => (
+                                                <table key={item.id} className="table table-sm table-striped table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="25%">Name</td>
+                                                            <td width="25%">{item.fullname}</td>
+                                                            <td width="25%">Date</td>
+                                                            <td width="25%">{item.billdate}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Address</td>
+                                                            <td>
+                                                                {item.address1} <br/>
+                                                                {item.address2}
+                                                            </td>
+                                                            <td>Bill No</td>
+                                                            <td>{item.id}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Pincode</td>
+                                                            <td>{item.pincode}</td>
+                                                            <td>Delivery Status</td>
+                                                            <td>
+                                                                <form action="">
+                                                                    <select
+                                                                        className="form-control"
+                                                                        name="orderstatus"
+                                                                        id="orderstatus"
+                                                                        value={selectedStatus || ''} // Controlled component (optional but recommended)
+                                                                        onChange={(e) => setSelectedStatus(e.target.value)} // Local update; add API save on submit
+                                                                    >
+                                                                        <option value="">Select</option>
+                                                                        <option selected={selectedStatus === '0'} value="0">Confirmed</option>
+                                                                        <option selected={selectedStatus === '1'} value="1">Dispatched</option>
+                                                                        <option selected={selectedStatus === '2'} value="2">Delivered</option>
+                                                                        <option selected={selectedStatus === '3'} value="3">Canceled</option>
+                                                                    </select>
+                                                                    <input
+                                                                        type="submit"
+                                                                        value="save"
+                                                                        className="btn btn-primary w-100 mt-1"
+                                                                    />
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Mobile</td>
+                                                            <td>{item.mobile}</td>
+                                                            <td>Payment mode</td>
+                                                            <td>{(item.paymentmode == '0' ? "Online" : "C.O.D")}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colSpan={1}>Remarks</td>
+                                                            <td colSpan={3}>
+                                                                {item.remarks}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            ))}
                                             <hr />
                                             {/* Order items table unchanged */}
                                             <table className="table table-sm table-striped table-bordered">

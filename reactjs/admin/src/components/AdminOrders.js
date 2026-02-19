@@ -66,7 +66,7 @@ export default function AdminOrders() {
             <td>
                 {/* Replaced View button: admin-view-order-detail.html → /view-order/1 */}
                 <Link
-                    to="/view-order/1"
+                    to={"/view-order/" + item.id} 
                     className="btn btn-primary"
                 >
                     View
@@ -143,7 +143,7 @@ export default function AdminOrders() {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                    {data.map((item) => displayOrder(item))}
+                                                        {data.map((item) => displayOrder(item))}
                                                 </tbody>
                                             </table>
                                         </div>
