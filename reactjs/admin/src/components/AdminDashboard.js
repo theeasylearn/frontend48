@@ -1,11 +1,62 @@
-import React from "react";
-import { Link } from 'react-router-dom';  // Fixed import (was default import)
 import Menu from "./Menu";
-
+import axios from 'axios'; //api call 
+import { ToastContainer } from 'react-toastify';
+import { showError, showMessage } from "./message";
+import { getBaseImage, getBaseUrl } from "./common";
+import { useState, useEffect } from "react";
 export default function AdminDashboard() {
+    //create state array
+    let [data, setData] = useState([]);
+
+    //hook 
+    useEffect(() => {
+        if (data.length == 0) {
+            let apiAddress = getBaseUrl() + "summery.php";
+            axios({
+                url: apiAddress,
+                method: 'get',
+                responseType: 'json'
+            }).then((response) => {
+                console.log(response);
+                //response object has data property which contains data received from api in this case data is 
+                /*
+                    [{"error":"no"},{"categories":"8","products":"39","users":"121","orders":"35","daily":"0","weekly":"250900","monthly":"250900","yearly":"250900"}]
+                */
+                // FETCH ERROR KEY VALUE FROM 0th element object
+                let error = response.data[0]['error'];
+                //check if api has any error or not 
+                if (error !== 'no') {
+                    // alert(error)
+                    showError(error);
+                }
+                else {
+                    //no error 
+                    //now fetch 1st object's total key's value 
+                    let total = response.data[1]['total'];
+                    if (total === 0) {
+                        showError("no data found");
+                    }
+                    else {
+                        showMessage("summery fetched...");
+                        //delete 2 object from beginning because it is not data
+                        response.data.splice(0, 1);
+                        setData(response.data);
+                    }
+                }
+            }).catch((error) => {
+                // alert("either you are offline or server is offline");
+                showError("either you are offline or server is offline");
+            })
+        }
+        //code we write in this hook execute only once after functional component is loaded
+        //generally it is used to call API, fetch data and store into into state
+
+    })
     return (
         <>
+
             <div id="wrapper">
+                <ToastContainer />
                 <Menu />
                 <div id="content-wrapper" className="d-flex flex-column">
                     <div id="content">
@@ -48,72 +99,32 @@ export default function AdminDashboard() {
                                             <h5 className="m-0 font-weight-bold text-primary">Dashboard</h5>
                                         </div>
                                         <div className="card-body">
-                                            {/* Orders Stats Row */}
-                                            <div className="row">
-                                                <div className="col-xl-3 col-md-6 mb-4">
-                                                    <div className="card border-left-primary shadow h-100 py-2">
-                                                        <div className="card-body">
-                                                            <div className="row no-gutters align-items-center">
-                                                                <div className="col mr-2">
-                                                                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                                        Orders (today)
-                                                                    </div>
-                                                                    <div className="h5 mb-0 font-weight-bold text-gray-800">
-                                                                        10
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-auto">
-                                                                    <i className="fas fa-calendar fa-2x text-gray-300" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {/* Other stat cards unchanged - no links here */}
-                                                <div className="col-xl-3 col-md-6 mb-4">
-                                                    <div className="card border-left-primary shadow h-100 py-2">
-                                                        <div className="card-body">
-                                                            <div className="row no-gutters align-items-center">
-                                                                <div className="col mr-2">
-                                                                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                                        Orders (Monthly)
-                                                                    </div>
-                                                                    <div className="h5 mb-0 font-weight-bold text-gray-800">
-                                                                        20
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-auto">
-                                                                    <i className="fas fa-calendar fa-2x text-gray-300" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {/* ... other stat cards remain unchanged */}
-                                            </div>
-                                            
-                                            {/* Additional Stats Row */}
                                             <div className="row mt-3">
-                                                <div className="col-xl-4 col-md-6 mb-4">
-                                                    <div className="card border-left-danger shadow h-100 py-2">
-                                                        <div className="card-body">
-                                                            <div className="row no-gutters align-items-center">
-                                                                <div className="col mr-2">
-                                                                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                                        Products
+                                                {data.map((item) => {
+                                                    let output ='';
+                                                    for (let key in item) {
+                                                        output += <div className="col-xl-4 col-md-6 mb-4">
+                                                            <div className="card border-left-danger shadow h-100 py-2">
+                                                                <div className="card-body">
+                                                                    <div className="row no-gutters align-items-center">
+                                                                        <div className="col mr-2">
+                                                                            <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                                                Products
+                                                                            </div>
+                                                                            <div className="h5 mb-0 font-weight-bold text-gray-800">
+                                                                                10
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="col-auto">
+                                                                            <i className="fa fa-gift fa-2x text-info" />
+                                                                        </div>
                                                                     </div>
-                                                                    <div className="h5 mb-0 font-weight-bold text-gray-800">
-                                                                        10
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-auto">
-                                                                    <i className="fa fa-gift fa-2x text-info" />
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                {/* Other stat cards unchanged */}
+                                                    }
+                                                    return output;
+                                                })}
                                             </div>
                                         </div>
                                     </div>

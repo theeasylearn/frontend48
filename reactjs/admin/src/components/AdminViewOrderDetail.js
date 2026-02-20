@@ -5,14 +5,12 @@ import axios from 'axios'; //api call
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import { getBaseImage, getBaseUrl } from "./common";
-
 export default function AdminViewOrderDetails() {
     let { orderid } = useParams();
-    let [data, setData] = useState([]);
+    let [data, setData] = useState([]); //order's detail
+    let [products, setProducts] = useState([]);// product purchased in ordered
     let [selectedStatus, setSelectedStatus] = useState(null); // New state for status
-
-    // Hook
-    useEffect(() => {
+    let fetchOrderDetail = function () {
         let apiAddress = getBaseUrl() + "orders.php?id=" + orderid;
         console.log(apiAddress);
         axios({
@@ -45,8 +43,40 @@ export default function AdminViewOrderDetails() {
         }).catch((error) => {
             showError("either you are offline or server is offline");
         });
-    }, []); // Empty deps: run once on mount
+    }
 
+    let fetchOrderItem = function () {
+        //https://theeasylearnacademy.com/shop/ws/order_details.php?orderid=37
+        let apiAddress = getBaseUrl() + "order_details.php?orderid=" + orderid;
+        console.log(apiAddress);
+        axios({
+            url: apiAddress,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            console.log(response);
+            let error = response.data[0]['error'];
+            if (error !== 'no') {
+                showError(error);
+            } else {
+                let total = response.data[1]['total'];
+                if (total === 0) {
+                    showError("no items found");
+                } else {
+                    showMessage("order item fetched...");
+                    response.data.splice(0, 2);
+                    setProducts(response.data);
+                }
+            }
+        }).catch((error) => {
+            showError("either you are offline or server is offline");
+        });
+    }
+    // Hook
+    useEffect(() => {
+        fetchOrderDetail(); //fetch order detail 
+        fetchOrderItem();
+    }, []); // Empty deps: run once on mount
     return (
         <>
             <div id="wrapper">
@@ -130,7 +160,7 @@ export default function AdminViewOrderDetails() {
                                                         <tr>
                                                             <td>Address</td>
                                                             <td>
-                                                                {item.address1} <br/>
+                                                                {item.address1} <br />
                                                                 {item.address2}
                                                             </td>
                                                             <td>Bill No</td>
@@ -191,36 +221,22 @@ export default function AdminViewOrderDetails() {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td width="5%">1</td>
-                                                        <td width="40%">IPhone - 15 pro</td>
-                                                        <td width="10%" align="right">
-                                                            125000
-                                                        </td>
-                                                        <td width="10%" align="right">
-                                                            2
-                                                        </td>
-                                                        <td width="20%" align="right">
-                                                            250000
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td width="5%">2</td>
-                                                        <td width="40%">Macbook pro</td>
-                                                        <td width="10%" align="right">
-                                                            225000
-                                                        </td>
-                                                        <td width="10%" align="right">
-                                                            1
-                                                        </td>
-                                                        <td width="20%" align="right">
-                                                            225000
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colSpan={4}>Total</td>
-                                                        <td align="right">4,75,000</td>
-                                                    </tr>
+                                                    {products.map((item) => {
+                                                        return (<tr>
+                                                            <td width="5%">{item.id}</td>
+                                                            <td width="40%">{item.title}</td>
+                                                            <td width="10%" align="right">
+                                                                {item.price}
+                                                            </td>
+                                                            <td width="10%" align="right">
+                                                                {item.quantity}
+                                                            </td>
+                                                            <td width="20%" align="right">
+                                                                {item.price * item.quantity}
+                                                            </td>
+                                                        </tr>);
+                                                    })}
+
                                                 </tbody>
                                             </table>
                                         </div>
