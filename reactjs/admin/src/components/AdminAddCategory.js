@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';  // Add this import
+import { Link, useNavigate } from 'react-router-dom';  // Add this import
 import React, { useState } from "react";
 import Menu from './Menu';  // Assuming Menu is imported - add if missing
 import axios from 'axios'; //api call 
@@ -6,10 +6,15 @@ import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import { getBaseImage, getBaseUrl } from "./common";
 export default function AdminAddCategory() {
+    
     //create state variable for each input
     let [title, setTitle] = useState('');
     let [photo, setPhoto] = useState('');
     let [islive, setIslive] = useState('');
+
+    
+    //create object navigate using useNavigate hook
+    let navigator = useNavigate();
     let saveCategory = function (e) {
         console.log(title, islive, photo);
         e.preventDefault();
@@ -34,7 +39,17 @@ export default function AdminAddCategory() {
             }
             else {
                 let success = response.data[1]['success'];
-                
+                let message = response.data[2]['message'];
+                if (success == 'no') {
+                    showError(message);
+                }
+                else {
+                    showMessage(message);
+                    //but after sometimes may be 2 seconds 
+                    setTimeout(() => {
+                        navigator("/category"); //pass route path into navigator 
+                    }, 2000);
+                }
             }
         }).catch((error) => {
             showError("either you are offline or server is offline");

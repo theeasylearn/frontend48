@@ -1,11 +1,142 @@
-import React from "react";
-import { Link } from 'react-router-dom';  // Add this import
-import Menu from "./Menu";
+import { Link, useNavigate } from 'react-router-dom';  // Add this import
+import React, { useState, useEffect } from "react";
+import Menu from './Menu';  // Assuming Menu is imported - add if missing
+import axios from 'axios'; //api call 
+import { ToastContainer } from 'react-toastify';
+import { showError, showMessage } from "./message";
+import { getBaseImage, getBaseUrl } from "./common";
 
 export default function AdminAddProduct() {
+    const [category, setCategory] = useState('');
+    const [title, setTitle] = useState('');
+    const [price, setPrice] = useState('');
+    const [details, setDetails] = useState('');
+    const [stock, setStock] = useState('');
+    const [weight, setWeight] = useState('');
+    const [size, setSize] = useState('');
+    const [photo, setPhoto] = useState(null);
+    const [isLive, setIsLive] = useState(1);
+    let [data, setData] = useState([]);
+
+    //hook 
+    useEffect(() => {
+        if (data.length == 0) {
+            let apiAddress = getBaseUrl() + "category.php";
+            axios({
+                url: apiAddress,
+                method: 'get',
+                responseType: 'json'
+            }).then((response) => {
+                console.log(response);
+                //response object has data property which contains data received from api in this case data is 
+                /*
+                    data is list of object (JSON)
+                    [
+                     0 {"error":"no"},
+                     1 {"total":7},
+                     2 {"id":"1","title":"laptop","photo":"laptop.jpg","islive":"1","isdeleted":"0"},
+                     3 {"id":"2","title":"mobile","photo":"mobile.jpg","islive":"1","isdeleted":"0"},
+                     4 {"id":"3","title":"book","photo":"books.jpg","islive":"1","isdeleted":"0"},
+                     5 {"id":"4","title":"Cookies & waffers","photo":"Cookies.jpg","islive":"1","isdeleted":"0"},{"id":"5","title":"Washing Powders","photo":"washing_powders.jpg","islive":"1","isdeleted":"0"},{"id":"6","title":"shampoo","photo":"shampoo.jpg","islive":"1","isdeleted":"0"},{"id":"39","title":"drill machine","photo":"WhatsApp Image 2026-01-25 at 1.25.28 PM.jpeg","islive":"1","isdeleted":"0"}]
+                */
+                // FETCH ERROR KEY VALUE FROM 0th element object
+                let error = response.data[0]['error'];
+                //check if api has any error or not 
+                if (error !== 'no') {
+                    // alert(error)
+                    showError(error);
+                }
+                else {
+                    //no error 
+                    //now fetch 1st object's total key's value 
+                    let total = response.data[1]['total'];
+                    if (total === 0) {
+                        showError("no category found");
+                    }
+                    else {
+                        showMessage("category fetched...");
+                        //delete 2 object from beginning because it is not data
+                        response.data.splice(0, 2);
+                        setData(response.data);
+                    }
+                }
+            }).catch((error) => {
+                // alert("either you are offline or server is offline");
+                showError("either you are offline or server is offline");
+            })
+        }
+        //code we write in this hook execute only once after functional component is loaded
+        //generally it is used to call API, fetch data and store into into state
+
+    });
+    let saveProduct = function (e) {
+        console.log({
+            category,
+            title,
+            price,
+            details,
+            stock,
+            weight,
+            size,
+            photo,
+            isLive
+        });
+
+        let apiAddress = getBaseUrl() + "insert_product.php";
+        //API CALLING 
+        let form = new FormData();
+        //store data into form object using append method, this method has 2 argument, 1st key and 2nd value 
+        form.append('name', title);
+        form.append('islive', islive);
+        form.append('photo', photo);
+        form.append('price', price);
+        form.append('detail', detail);
+        form.append('categoryid', categoryid);
+        form.append('stock', stock);
+        /*
+        •	name (required): Product name 
+•	photo (required): Product photo (file upload) 
+•	price (required): Product price 
+•	stock (required): Product stock quantity 
+•	detail (required): Product details 
+•	categoryid (required): Category ID 
+*/
+        axios({
+            method: 'post',
+            responseType: 'json',
+            url: apiAddress,
+            data: form
+        }).then((response) => {
+            console.log(response);
+            /* [{'error':'no'},{'success':'yes'},{'message':'category inserted'}] */
+            let error = response.data[0]['error'];
+            if (error != 'no') {
+                showError(error);
+            }
+            else {
+                let success = response.data[1]['success'];
+                let message = response.data[2]['message'];
+                if (success == 'no') {
+                    showError(message);
+                }
+                else {
+                    showMessage(message);
+                    //but after sometimes may be 2 seconds 
+                    setTimeout(() => {
+                        navigator("/product"); //pass route path into navigator 
+                    }, 2000);
+                }
+            }
+        }).catch((error) => {
+            showError("either you are offline or server is offline");
+        });
+        e.preventDefault();
+    }
+
     return (
         <>
             <div id="wrapper">
+                <ToastContainer />
                 {/* Sidebar - Replaced all <a> with <Link> matching your routes */}
                 <Menu />
                 {/* End of Sidebar */}
@@ -65,7 +196,7 @@ export default function AdminAddProduct() {
                                             </Link>
                                         </div>
                                         <div className="card-body">
-                                            <form>
+                                            <form onSubmit={saveProduct}>
                                                 {/* Form fields unchanged - no navigation links here */}
                                                 <div className="row mb-3">
                                                     <div className="col-md-4">
@@ -73,11 +204,19 @@ export default function AdminAddProduct() {
                                                             Category
                                                         </label>{" "}
                                                         <br />
-                                                        <select id="category" className="form-select" required="">
-                                                            <option selected="">Choose...</option>
-                                                            <option value={1}>Category 1</option>
-                                                            <option value={2}>Category 2</option>
-                                                            <option value={3}>Category 3</option>
+                                                        <select
+                                                            id="category"
+                                                            className="form-select"
+                                                            required=""
+                                                            value={category}
+                                                            onChange={(e) => setCategory(e.target.value)}
+                                                        >
+                                                            <option value="">Choose...</option>
+                                                            {
+                                                                data.map((item) => {
+                                                                    return (<option value={item.id}>{item.title}</option>)
+                                                                })
+                                                            }
                                                         </select>
                                                     </div>
                                                     <div className="col-md-4">
@@ -90,6 +229,8 @@ export default function AdminAddProduct() {
                                                             id="title"
                                                             placeholder="Enter title"
                                                             required=""
+                                                            value={title}
+                                                            onChange={(e) => setTitle(e.target.value)}
                                                         />
                                                     </div>
                                                     <div className="col-md-4">
@@ -102,6 +243,8 @@ export default function AdminAddProduct() {
                                                             id="price"
                                                             placeholder="Enter price"
                                                             required=""
+                                                            value={price}
+                                                            onChange={(e) => setPrice(e.target.value)}
                                                         />
                                                     </div>
                                                 </div>
@@ -116,7 +259,8 @@ export default function AdminAddProduct() {
                                                             rows={3}
                                                             placeholder="Enter details"
                                                             required=""
-                                                            defaultValue={""}
+                                                            value={details}
+                                                            onChange={(e) => setDetails(e.target.value)}
                                                         />
                                                     </div>
                                                 </div>
@@ -131,6 +275,8 @@ export default function AdminAddProduct() {
                                                             id="stock"
                                                             placeholder="Enter stock quantity"
                                                             required=""
+                                                            value={stock}
+                                                            onChange={(e) => setStock(e.target.value)}
                                                         />
                                                     </div>
                                                     <div className="col-md-4">
@@ -143,6 +289,8 @@ export default function AdminAddProduct() {
                                                             id="weight"
                                                             placeholder="Enter weight"
                                                             required=""
+                                                            value={weight}
+                                                            onChange={(e) => setWeight(e.target.value)}
                                                         />
                                                     </div>
                                                     <div className="col-md-4">
@@ -155,6 +303,8 @@ export default function AdminAddProduct() {
                                                             id="size"
                                                             placeholder="Enter size"
                                                             required=""
+                                                            value={size}
+                                                            onChange={(e) => setSize(e.target.value)}
                                                         />
                                                     </div>
                                                 </div>
@@ -169,6 +319,7 @@ export default function AdminAddProduct() {
                                                             id="photo"
                                                             required=""
                                                             accept="image/*"
+                                                            onChange={(e) => setPhoto(e.target.files[0])}
                                                         />
                                                     </div>
                                                     <div className="col-md-4">
@@ -179,8 +330,10 @@ export default function AdminAddProduct() {
                                                                 type="radio"
                                                                 name="islive"
                                                                 id="isLiveYes"
-                                                                defaultValue={1}
+                                                                value={1}
                                                                 required=""
+                                                                checked={isLive === 1}
+                                                                onChange={() => setIsLive(1)}
                                                             />
                                                             <label className="form-check-label" htmlFor="isLiveYes">
                                                                 Yes
@@ -192,8 +345,10 @@ export default function AdminAddProduct() {
                                                                 type="radio"
                                                                 name="islive"
                                                                 id="isLiveNo"
-                                                                defaultValue={0}
+                                                                value={0}
                                                                 required=""
+                                                                checked={isLive === 0}
+                                                                onChange={() => setIsLive(0)}
                                                             />
                                                             <label className="form-check-label" htmlFor="isLiveNo">
                                                                 No
