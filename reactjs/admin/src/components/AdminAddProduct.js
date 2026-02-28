@@ -4,7 +4,7 @@ import Menu from './Menu';  // Assuming Menu is imported - add if missing
 import axios from 'axios'; //api call 
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
-import { getBaseImage, getBaseUrl } from "./common";
+import {  getBaseUrl } from "./common";
 
 export default function AdminAddProduct() {
     const [category, setCategory] = useState('');
@@ -17,6 +17,7 @@ export default function AdminAddProduct() {
     const [photo, setPhoto] = useState(null);
     const [isLive, setIsLive] = useState(1);
     let [data, setData] = useState([]);
+    let navigator = useNavigate();
 
     //hook 
     useEffect(() => {
@@ -87,20 +88,20 @@ export default function AdminAddProduct() {
         let form = new FormData();
         //store data into form object using append method, this method has 2 argument, 1st key and 2nd value 
         form.append('name', title);
-        form.append('islive', islive);
         form.append('photo', photo);
         form.append('price', price);
-        form.append('detail', detail);
-        form.append('categoryid', categoryid);
         form.append('stock', stock);
+        form.append('detail', details);
+        form.append('categoryid', category);
+        form.append('islive', isLive);
         /*
         •	name (required): Product name 
-•	photo (required): Product photo (file upload) 
-•	price (required): Product price 
-•	stock (required): Product stock quantity 
-•	detail (required): Product details 
-•	categoryid (required): Category ID 
-*/
+        •	photo (required): Product photo (file upload) 
+        •	price (required): Product price 
+        •	stock (required): Product stock quantity 
+        •	detail (required): Product details 
+        •	categoryid (required): Category ID 
+        */
         axios({
             method: 'post',
             responseType: 'json',
@@ -108,7 +109,7 @@ export default function AdminAddProduct() {
             data: form
         }).then((response) => {
             console.log(response);
-            /* [{'error':'no'},{'success':'yes'},{'message':'category inserted'}] */
+            /* [{'error':'no'},{'success':'yes'},{'message':'product inserted'}] */
             let error = response.data[0]['error'];
             if (error != 'no') {
                 showError(error);

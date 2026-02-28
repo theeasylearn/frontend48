@@ -62,6 +62,10 @@ export default function AdminCategory() {
         //generally it is used to call API, fetch data and store into into state
 
     })
+
+    let deleteCategory = function(categoryid){
+        alert(categoryid);
+    }
     return (
         <>
             <div id="wrapper">
@@ -157,9 +161,9 @@ export default function AdminCategory() {
                                                                     Edit
                                                                 </Link>
                                                                 &nbsp;
-                                                                <a href="#" className="btn btn-danger btn-sm">
+                                                                <button onClick={() => deleteCategory(item.id)} type="button" className="btn btn-danger btn-sm">
                                                                     Delete
-                                                                </a>
+                                                                </button>
                                                             </td>
                                                         </tr>);
                                                     })}

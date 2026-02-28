@@ -7,6 +7,42 @@ import { getBaseImage, getBaseUrl } from "./common";
 
 export default function AdminProduct() {
     let [data, setData] = useState([]);
+
+    let deleteProduct = function (productid) {
+        // alert('delete product function called..' + productid)
+        //api calling 
+        let apiAddress = getBaseUrl() + "delete_product.php?id=" + productid;
+        axios({
+            url: apiAddress,
+            method: 'get',
+            responseType: 'json'
+        }).then((response) => {
+            console.log(response);
+            let error = response.data[0]['error'];
+            //check if api has any error or not 
+            if (error !== 'no') {
+                // alert(error)
+                showError(error);
+            }
+            else {
+                showMessage(response.data[1]['message']);
+                // setData([]);very very bad way
+                // use filter method to find & remove particular product 
+                let temp = data.filter((item) => {
+                    if(item.id !== productid)
+                    {
+                        return item
+                    }
+                });
+                setData(temp); //update data
+            }
+
+        }).catch((error) => {
+            // alert("either you are offline or server is offline");
+            showError("either you are offline or server is offline");
+        })
+    }
+
     //create function inside function 
     let displayProduct = function (item) {
         return (<tr>
@@ -29,7 +65,7 @@ export default function AdminProduct() {
                 />
             </td>
             <td>{item.stock}</td>
-            <td>{(item.islive === '1') ? "Yes":"No"}</td>
+            <td>{(item.islive === '1') ? "Yes" : "No"}</td>
             <td>
                 {/* Edit button replaced */}
                 <Link
@@ -38,9 +74,9 @@ export default function AdminProduct() {
                 >
                     Edit
                 </Link>
-                <a href="#" className="btn btn-danger btn-sm btn-block">
+                <button onClick={() => deleteProduct(item.id)} type='button' className="btn btn-danger btn-sm btn-block">
                     Delete
-                </a>
+                </button>
             </td>
         </tr>)
     }
