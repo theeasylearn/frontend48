@@ -1,8 +1,112 @@
-import React from "react";
-import { Link } from "react-router-dom";  // Add this import
-import Menu from "./Menu";
+import { Link, useNavigate } from 'react-router-dom';  // Add this import
+import React, { useState, useEffect } from "react";
+import Menu from './Menu';  // Assuming Menu is imported - add if missing
+import axios from 'axios'; //api call 
+import { ToastContainer } from 'react-toastify';
+import { showError, showMessage } from "./message";
+import { getBaseImage, getBaseUrl } from "./common";
 
 export default function AdminEditProduct() {
+    let [data, setData] = useState([]);
+    let [isFetched, setIsFetched] = useState(false);
+    const [category, setCategory] = useState('');
+    const [title, setTitle] = useState('');
+    const [price, setPrice] = useState('');
+    const [details, setDetails] = useState('');
+    const [stock, setStock] = useState('');
+    const [weight, setWeight] = useState('');
+    const [size, setSize] = useState('');
+    const [photo, setPhoto] = useState(null);
+    const [isLive, setIsLive] = useState(1);
+
+
+    let fetchCategory = function () {
+        if (data.length == 0) {
+            let apiAddress = getBaseUrl() + "category.php";
+            axios({
+                url: apiAddress,
+                method: 'get',
+                responseType: 'json'
+            }).then((response) => {
+                console.log(response);
+                // FETCH ERROR KEY VALUE FROM 0th element object
+                let error = response.data[0]['error'];
+                //check if api has any error or not 
+                if (error !== 'no') {
+                    // alert(error)
+                    showError(error);
+                }
+                else {
+                    //no error 
+                    //now fetch 1st object's total key's value 
+                    let total = response.data[1]['total'];
+                    if (total === 0) {
+                        showError("no category found");
+                    }
+                    else {
+                        showMessage("category fetched...");
+                        //delete 2 object from beginning because it is not data
+                        response.data.splice(0, 2);
+                        setData(response.data);
+                    }
+                }
+            }).catch((error) => {
+                // alert("either you are offline or server is offline");
+                showError("either you are offline or server is offline");
+            })
+        }
+    }
+
+    let fetchProduct = function () {
+        if (isFetched == false) {
+            let apiAddress = getBaseUrl() + "product.php?productid=2";
+            axios({
+                url: apiAddress,
+                method: 'get',
+                responseType: 'json'
+            }).then((response) => {
+                console.log(response);
+                // FETCH ERROR KEY VALUE FROM 0th element object
+                let error = response.data[0]['error'];
+                //check if api has any error or not 
+                if (error !== 'no') {
+                    // alert(error)
+                    showError(error);
+                }
+                else {
+                    //no error 
+                    //now fetch 1st object's total key's value 
+                    let total = response.data[1]['total'];
+                    if (total === 0) {
+                        showError("no product found");
+                    }
+                    else {
+                        showMessage("product details fetched...");
+                        //delete 2 object from beginning because it is not data
+                        //store each and every property of product into individual state variable
+                        setIsFetched(true);
+                        setTitle(response.data[2]['title']);
+                        setPrice(response.data[2]['price']);
+                        setStock(response.data[2]['stock']);
+                        setWeight(response.data[2]['weight']);
+                        setSize(response.data[2]['size']);
+                        setPhoto(response.data[2]['photo']);
+                        setDetails(response.data[2]['detail']);
+                        setCategory(response.data[2]['categorytitle']);
+                        setIsLive(response.data[2]['islive']);
+
+                    }
+                }
+            }).catch((error) => {
+                // alert("either you are offline or server is offline");
+                showError("either you are offline or server is offline");
+            })
+        }
+    }
+    useEffect(() => {
+        fetchCategory();
+        fetchProduct();
+    });
     return (
         <>
             <div id="wrapper">
@@ -69,10 +173,10 @@ export default function AdminEditProduct() {
                                                 <div className="row">
                                                     <div className="col-sm-2">
                                                         <b>Existing Photo</b> <br />
-                                                        <img
-                                                            src="http://picsum.photos/200"
-                                                            className="img-fluid"
-                                                        />
+            <img
+                src={getBaseImage() + "product/" + photo}
+                className="img-fluid"
+            />
                                                     </div>
                                                     <div className="col-sm-10">
                                                         <div className="row mb-3">
@@ -86,10 +190,10 @@ export default function AdminEditProduct() {
                                                                     className="form-select"
                                                                     required=""
                                                                 >
-                                                                    <option selected="">Choose...</option>
-                                                                    <option value={1}>Category 1</option>
-                                                                    <option value={2}>Category 2</option>
-                                                                    <option value={3}>Category 3</option>
+                                                                    <option value=''>Choose...</option>
+                                                                    {data.map((item) => {
+                                                                        return <option value={item.id}>{item.title}</option>
+                                                                    })}
                                                                 </select>
                                                             </div>
                                                             <div className="col-md-4">
@@ -102,6 +206,7 @@ export default function AdminEditProduct() {
                                                                     id="title"
                                                                     placeholder="Enter title"
                                                                     required=""
+                                                                    value={title}
                                                                 />
                                                             </div>
                                                             <div className="col-md-4">
@@ -114,6 +219,7 @@ export default function AdminEditProduct() {
                                                                     id="price"
                                                                     placeholder="Enter price"
                                                                     required=""
+                                                                    value={price}
                                                                 />
                                                             </div>
                                                         </div>
@@ -129,6 +235,7 @@ export default function AdminEditProduct() {
                                                                     placeholder="Enter details"
                                                                     required=""
                                                                     defaultValue={""}
+                                                                    value={details}
                                                                 />
                                                             </div>
                                                         </div>
@@ -143,6 +250,7 @@ export default function AdminEditProduct() {
                                                                     id="stock"
                                                                     placeholder="Enter stock quantity"
                                                                     required=""
+                                                                    value={stock}
                                                                 />
                                                             </div>
                                                             <div className="col-md-4">
@@ -155,6 +263,7 @@ export default function AdminEditProduct() {
                                                                     id="weight"
                                                                     placeholder="Enter weight"
                                                                     required=""
+                                                                    value={weight}
                                                                 />
                                                             </div>
                                                             <div className="col-md-4">
@@ -167,6 +276,7 @@ export default function AdminEditProduct() {
                                                                     id="size"
                                                                     placeholder="Enter size"
                                                                     required=""
+                                                                    value={size}
                                                                 />
                                                             </div>
                                                         </div>
@@ -186,14 +296,15 @@ export default function AdminEditProduct() {
                                                             <div className="col-md-4">
                                                                 <label className="form-label">Is Live</label>
                                                                 <div className="form-check">
-                                                                    <input
-                                                                        className="form-check-input"
-                                                                        type="radio"
-                                                                        name="islive"
-                                                                        id="isLiveYes"
-                                                                        defaultValue={1}
-                                                                        required=""
-                                                                    />
+    <input
+        className="form-check-input"
+        type="radio"
+        name="islive"
+        id="isLiveYes"
+        defaultValue={1}
+        required=""
+        checked = {(isLive === '1') ? true : false}
+    />
                                                                     <label
                                                                         className="form-check-label"
                                                                         htmlFor="isLiveYes"
@@ -202,14 +313,15 @@ export default function AdminEditProduct() {
                                                                     </label>
                                                                 </div>
                                                                 <div className="form-check">
-                                                                    <input
-                                                                        className="form-check-input"
-                                                                        type="radio"
-                                                                        name="islive"
-                                                                        id="isLiveNo"
-                                                                        defaultValue={0}
-                                                                        required=""
-                                                                    />
+    <input
+        className="form-check-input"
+        type="radio"
+        name="islive"
+        id="isLiveNo"
+        defaultValue={0}
+        required=""
+        checked = {(isLive === '0') ? true : false}
+    />
                                                                     <label
                                                                         className="form-check-label"
                                                                         htmlFor="isLiveNo"
