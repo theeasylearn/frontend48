@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';  // Add this import
+import { Link, useNavigate, useParams } from 'react-router-dom';  // Add this import
 import React, { useState, useEffect } from "react";
 import Menu from './Menu';  // Assuming Menu is imported - add if missing
 import axios from 'axios'; //api call 
@@ -18,7 +18,8 @@ export default function AdminEditProduct() {
     const [size, setSize] = useState('');
     const [photo, setPhoto] = useState(null);
     const [isLive, setIsLive] = useState(1);
-
+    //create variable to stored productid using hook 
+    let { productid } = useParams();
 
     let fetchCategory = function () {
         if (data.length == 0) {
@@ -59,7 +60,9 @@ export default function AdminEditProduct() {
 
     let fetchProduct = function () {
         if (isFetched == false) {
-            let apiAddress = getBaseUrl() + "product.php?productid=2";
+            // let apiAddress = getBaseUrl() + "product.php?productid=" + productid;
+            let apiAddress = getBaseUrl() + `product.php?productid=${productid}`
+            console.log(apiAddress);
             axios({
                 url: apiAddress,
                 method: 'get',
@@ -103,15 +106,55 @@ export default function AdminEditProduct() {
             })
         }
     }
+
+    let updateProduct = function (e) {
+
+        e.preventDefault();
+        console.log(category,
+            title,
+            price,
+            details,
+            stock,
+            weight,
+            size,
+            photo,
+            isLive);
+        //api call 
+        /*
+            •	name (required): Product name 
+            •	photo (required): Product photo (file upload) 
+            •	price (required): Product price 
+            •	stock (required): Product stock quantity 
+            •	detail (required): Product details 
+            •	productid (required): Product ID 
+            •	categoryid (required): Category ID 
+        */
+        let apiAddress = getBaseUrl() + "update_product.php";
+        let form = new FormData();
+        form.append("name", title);
+        form.append("photo", photo);
+        form.append("price", price);
+        form.append("stock", stock);
+        form.append("detail", details);
+        form.append("productid", productid);
+        form.append("categoryid", category);
+        axios({
+            url:apiAddress,
+            method:'post',
+            responseType:'json',
+            data:form
+        });    
+    }
+
     useEffect(() => {
-        fetchCategory();
         fetchProduct();
+        fetchCategory();
     });
     return (
         <>
             <div id="wrapper">
                 {/* Sidebar */}
-                <Menu />
+                < Menu />
                 {/* End of Sidebar */}
                 {/* Content Wrapper */}
                 <div id="content-wrapper" className="d-flex flex-column">
@@ -169,14 +212,14 @@ export default function AdminEditProduct() {
                                             </Link>
                                         </div>
                                         <div className="card-body">
-                                            <form>
+                                            <form onSubmit={updateProduct}>
                                                 <div className="row">
                                                     <div className="col-sm-2">
                                                         <b>Existing Photo</b> <br />
-            <img
-                src={getBaseImage() + "product/" + photo}
-                className="img-fluid"
-            />
+                                                        <img
+                                                            src={getBaseImage() + "product/" + photo}
+                                                            className="img-fluid"
+                                                        />
                                                     </div>
                                                     <div className="col-sm-10">
                                                         <div className="row mb-3">
@@ -189,10 +232,15 @@ export default function AdminEditProduct() {
                                                                     id="category"
                                                                     className="form-select"
                                                                     required=""
+                                                                    onChange={(e) => setCategory(e.target.value)}
                                                                 >
                                                                     <option value=''>Choose...</option>
                                                                     {data.map((item) => {
-                                                                        return <option value={item.id}>{item.title}</option>
+
+                                                                        if (item.title == category)
+                                                                            return <option selected value={item.id}>{item.title}</option>
+                                                                        else
+                                                                            return <option value={item.id}>{item.title}</option>
                                                                     })}
                                                                 </select>
                                                             </div>
@@ -206,6 +254,7 @@ export default function AdminEditProduct() {
                                                                     id="title"
                                                                     placeholder="Enter title"
                                                                     required=""
+                                                                    onChange={(e) => setTitle(e.target.value)}
                                                                     value={title}
                                                                 />
                                                             </div>
@@ -219,6 +268,7 @@ export default function AdminEditProduct() {
                                                                     id="price"
                                                                     placeholder="Enter price"
                                                                     required=""
+                                                                    onChange={(e) => setPrice(e.target.value)}
                                                                     value={price}
                                                                 />
                                                             </div>
@@ -234,6 +284,7 @@ export default function AdminEditProduct() {
                                                                     rows={3}
                                                                     placeholder="Enter details"
                                                                     required=""
+                                                                    onChange={(e) => setDetails(e.target.value)}
                                                                     defaultValue={""}
                                                                     value={details}
                                                                 />
@@ -250,6 +301,7 @@ export default function AdminEditProduct() {
                                                                     id="stock"
                                                                     placeholder="Enter stock quantity"
                                                                     required=""
+                                                                    onChange={(e) => setStock(e.target.value)}
                                                                     value={stock}
                                                                 />
                                                             </div>
@@ -263,6 +315,7 @@ export default function AdminEditProduct() {
                                                                     id="weight"
                                                                     placeholder="Enter weight"
                                                                     required=""
+                                                                    onChange={(e) => setWeight(e.target.value)}
                                                                     value={weight}
                                                                 />
                                                             </div>
@@ -276,6 +329,7 @@ export default function AdminEditProduct() {
                                                                     id="size"
                                                                     placeholder="Enter size"
                                                                     required=""
+                                                                    onChange={(e) => setSize(e.target.value)}
                                                                     value={size}
                                                                 />
                                                             </div>
@@ -290,21 +344,23 @@ export default function AdminEditProduct() {
                                                                     className="form-control"
                                                                     id="photo"
                                                                     required=""
+                                                                    onChange={(e) => setPhoto(e.target.files[0])}
                                                                     accept="image/*"
                                                                 />
                                                             </div>
                                                             <div className="col-md-4">
                                                                 <label className="form-label">Is Live</label>
                                                                 <div className="form-check">
-    <input
-        className="form-check-input"
-        type="radio"
-        name="islive"
-        id="isLiveYes"
-        defaultValue={1}
-        required=""
-        checked = {(isLive === '1') ? true : false}
-    />
+                                                                    <input
+                                                                        className="form-check-input"
+                                                                        type="radio"
+                                                                        name="islive"
+                                                                        id="isLiveYes"
+                                                                        defaultValue={1}
+                                                                        required=""
+                                                                        onChange={(e) => setIsLive(e.target.value)}
+                                                                        checked={(isLive === '1') ? true : false}
+                                                                    />
                                                                     <label
                                                                         className="form-check-label"
                                                                         htmlFor="isLiveYes"
@@ -313,15 +369,16 @@ export default function AdminEditProduct() {
                                                                     </label>
                                                                 </div>
                                                                 <div className="form-check">
-    <input
-        className="form-check-input"
-        type="radio"
-        name="islive"
-        id="isLiveNo"
-        defaultValue={0}
-        required=""
-        checked = {(isLive === '0') ? true : false}
-    />
+                                                                    <input
+                                                                        className="form-check-input"
+                                                                        type="radio"
+                                                                        name="islive"
+                                                                        id="isLiveNo"
+                                                                        defaultValue={0}
+                                                                        onChange={(e) => setIsLive(e.target.value)}
+                                                                        required=""
+                                                                        checked={(isLive === '0') ? true : false}
+                                                                    />
                                                                     <label
                                                                         className="form-check-label"
                                                                         htmlFor="isLiveNo"
@@ -355,7 +412,7 @@ export default function AdminEditProduct() {
                     {/* End of Main Content */}
                 </div>
                 {/* End of Content Wrapper */}
-            </div>
+            </div >
         </>
     );
 }

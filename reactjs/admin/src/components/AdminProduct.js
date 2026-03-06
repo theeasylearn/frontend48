@@ -29,8 +29,7 @@ export default function AdminProduct() {
                 // setData([]);very very bad way
                 // use filter method to find & remove particular product 
                 let temp = data.filter((item) => {
-                    if(item.id !== productid)
-                    {
+                    if (item.id !== productid) {
                         return item
                     }
                 });
@@ -69,7 +68,7 @@ export default function AdminProduct() {
             <td>
                 {/* Edit button replaced */}
                 <Link
-                    to="/edit-product/1"
+                    to={"/edit-product/" + item.id}
                     className="btn btn-warning btn-sm btn-block mb-1"
                 >
                     Edit
