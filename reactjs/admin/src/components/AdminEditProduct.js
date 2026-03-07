@@ -20,7 +20,8 @@ export default function AdminEditProduct() {
     const [isLive, setIsLive] = useState(1);
     //create variable to stored productid using hook 
     let { productid } = useParams();
-
+    //navigator object
+    let navigator = useNavigate();
     let fetchCategory = function () {
         if (data.length == 0) {
             let apiAddress = getBaseUrl() + "category.php";
@@ -95,7 +96,7 @@ export default function AdminEditProduct() {
                         setSize(response.data[2]['size']);
                         setPhoto(response.data[2]['photo']);
                         setDetails(response.data[2]['detail']);
-                        setCategory(response.data[2]['categorytitle']);
+                        //setCategory(response.data[2]['categorytitle']);
                         setIsLive(response.data[2]['islive']);
 
                     }
@@ -110,15 +111,15 @@ export default function AdminEditProduct() {
     let updateProduct = function (e) {
 
         e.preventDefault();
-        console.log(category,
-            title,
-            price,
-            details,
-            stock,
-            weight,
-            size,
-            photo,
-            isLive);
+        // console.log(category,
+        //     title,
+        //     price,
+        //     details,
+        //     stock,
+        //     weight,
+        //     size,
+        //     photo,
+        //     isLive);
         //api call 
         /*
             •	name (required): Product name 
@@ -138,12 +139,38 @@ export default function AdminEditProduct() {
         form.append("detail", details);
         form.append("productid", productid);
         form.append("categoryid", category);
+        form.append("islive", isLive);
+        console.log(form);
         axios({
-            url:apiAddress,
-            method:'post',
-            responseType:'json',
-            data:form
-        });    
+            url: apiAddress,
+            method: 'post',
+            responseType: 'json',
+            data: form
+        }).then((response) => {
+            //only after successfully receiving data from server   
+            console.log(response.data);
+            let error = response.data[0]['error'];
+            if (error != 'no') {
+                showError(error);
+            }
+            else {
+                let success = response.data[1]['success'];
+                let message = response.data[2]['message'];
+                if (success === 'no') {
+                    showError(message); //red color
+                }
+                else {
+                    showMessage(message); //green color
+                    //redirect user on product screen after 2 seconds delay
+                    setTimeout(function () {
+                       // navigator("/product");
+                    }, 2000);
+                }
+            }
+        }).catch((error) => {
+            console.log(error);
+            showError("either you are offline or server is offline");
+        });
     }
 
     useEffect(() => {
@@ -153,6 +180,7 @@ export default function AdminEditProduct() {
     return (
         <>
             <div id="wrapper">
+                <ToastContainer />
                 {/* Sidebar */}
                 < Menu />
                 {/* End of Sidebar */}
