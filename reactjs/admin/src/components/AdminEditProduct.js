@@ -172,7 +172,6 @@ export default function AdminEditProduct() {
             showError("either you are offline or server is offline");
         });
     }
-
     useEffect(() => {
         fetchProduct();
         fetchCategory();
