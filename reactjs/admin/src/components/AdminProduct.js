@@ -4,10 +4,10 @@ import axios from 'axios'; //api call
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import { getBaseImage, getBaseUrl } from "./common";
-
+import verifyLogin from "./check-login";
 export default function AdminProduct() {
     let [data, setData] = useState([]);
-
+    verifyLogin();
     let deleteProduct = function (productid) {
         // alert('delete product function called..' + productid)
         //api calling 

@@ -1,6 +1,7 @@
 import React from "react";
-
+import verifyLogin from "./check-login";
 export default function AdminPrintOrder() {
+    verifyLogin();
     return (
         <>
             <h2 align="center">Bill</h2> 

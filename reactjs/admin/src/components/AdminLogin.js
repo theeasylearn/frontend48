@@ -4,11 +4,14 @@ import Menu from './Menu';  // Assuming Menu is imported - add if missing
 import axios from 'axios'; //api call 
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
-import { getBaseImage, getBaseUrl } from "./common";
+import { getBaseImage, getBaseUrl,FILE_NAME } from "./common";
+import  {useCookies}  from 'react-cookie';
 export default function AdminLogin() {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
     let navigate = useNavigate();
+    //create array/list and methods to work upon cookie 
+    let [cookies,setCookie,removeCookie] = useCookies(FILE_NAME);
 
     let verifyLogin = function (event) {
         console.log(email, password);
@@ -33,10 +36,14 @@ export default function AdminLogin() {
             else {
                 let success = response.data[1]['success'];
                 let message = response.data[2]['message'];
+                let id = response.data[3]['id'];
                 if (success === 'no')
                     showError(message);
                 else {
                     showMessage(message);
+                    //create cookies 
+                    setCookie('admin_id',id);
+                    console.log('admin id',cookies['admin_id']);
                     setTimeout(() => {
                         navigate("/dashboard");
                     }, 2000);
@@ -46,6 +53,7 @@ export default function AdminLogin() {
             showError('it seems either you are offline or server is offline');
         });
     }
+
     return (
         <>
             <div className="container">

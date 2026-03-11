@@ -10,3 +10,4 @@ export function getBaseImage()
 {
     return getBase() + "images/";
 }
+export const FILE_NAME = 'theasylearn';

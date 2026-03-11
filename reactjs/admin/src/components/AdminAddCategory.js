@@ -5,6 +5,7 @@ import axios from 'axios'; //api call
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import { getBaseImage, getBaseUrl } from "./common";
+import verifyLogin from "./check-login";
 export default function AdminAddCategory() {
     
     //create state variable for each input
@@ -12,7 +13,7 @@ export default function AdminAddCategory() {
     let [photo, setPhoto] = useState('');
     let [islive, setIslive] = useState('');
 
-    
+    verifyLogin();
     //create object navigate using useNavigate hook
     let navigator = useNavigate();
     let saveCategory = function (e) {

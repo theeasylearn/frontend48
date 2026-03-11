@@ -4,10 +4,11 @@ import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import { getBaseImage, getBaseUrl } from "./common";
 import { useState, useEffect } from "react";
+import verifyLogin from "./check-login";
 
 export default function AdminDashboard() {
-    const [data, setData] = useState([]);
-
+    const [data, setData] = useState([]);   
+    verifyLogin();
     useEffect(() => {
         if (data.length === 0) {
             const apiAddress = getBaseUrl() + "summery.php";

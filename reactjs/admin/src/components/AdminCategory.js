@@ -6,11 +6,11 @@ import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import { getBaseImage, getBaseUrl } from "./common";
 //api calling means fetching data from remote location (mostly web page that returns data in json format)
-//
+import verifyLogin from "./check-login";
 export default function AdminCategory() {
     //create state array
     let [data, setData] = useState([]);
-
+    verifyLogin();
     //hook 
     useEffect(() => {
         if (data.length == 0) {

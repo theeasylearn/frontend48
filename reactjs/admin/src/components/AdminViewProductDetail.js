@@ -5,10 +5,11 @@ import axios from 'axios'; //api call
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import { getBaseImage, getBaseUrl } from "./common";
-
+import verifyLogin from "./check-login";
 export default function AdminViewProductDetails() {
     let [data, setData] = useState([]);
     let { productid } = useParams();
+    verifyLogin();
     //hook 
     useEffect(() => {
         if (data.length == 0) {

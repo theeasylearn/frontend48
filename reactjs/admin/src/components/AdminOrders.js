@@ -5,11 +5,11 @@ import axios from 'axios'; //api call
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import { getBaseUrl } from "./common";
-
+import verifyLogin from "./check-login";
 export default function AdminOrders() {
     //create state array
     let [data, setData] = useState([]);
-
+    verifyLogin();
     //hook 
     useEffect(() => {
         if (data.length == 0) {

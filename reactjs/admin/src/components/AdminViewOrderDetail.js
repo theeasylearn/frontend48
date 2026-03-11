@@ -5,11 +5,14 @@ import axios from 'axios'; //api call
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import { getBaseImage, getBaseUrl } from "./common";
+import verifyLogin from "./check-login";
 export default function AdminViewOrderDetails() {
+
     let { orderid } = useParams();
     let [data, setData] = useState([]); //order's detail
     let [products, setProducts] = useState([]);// product purchased in ordered
     let [selectedStatus, setSelectedStatus] = useState(null); // New state for status
+    verifyLogin();
     let fetchOrderDetail = function () {
         let apiAddress = getBaseUrl() + "orders.php?id=" + orderid;
         console.log(apiAddress);

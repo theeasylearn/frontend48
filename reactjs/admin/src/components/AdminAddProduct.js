@@ -5,7 +5,7 @@ import axios from 'axios'; //api call
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import {  getBaseUrl } from "./common";
-
+import verifyLogin from "./check-login";
 export default function AdminAddProduct() {
     const [category, setCategory] = useState('');
     const [title, setTitle] = useState('');
@@ -18,7 +18,7 @@ export default function AdminAddProduct() {
     const [isLive, setIsLive] = useState(1);
     let [data, setData] = useState([]);
     let navigator = useNavigate();
-
+    verifyLogin();
     //hook 
     useEffect(() => {
         if (data.length == 0) {

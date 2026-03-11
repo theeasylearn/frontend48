@@ -5,7 +5,7 @@ import axios from 'axios'; //api call
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from "./message";
 import { getBaseImage, getBaseUrl } from "./common";
-
+import verifyLogin from "./check-login";
 export default function AdminEditProduct() {
     let [data, setData] = useState([]);
     let [isFetched, setIsFetched] = useState(false);
@@ -20,6 +20,7 @@ export default function AdminEditProduct() {
     const [isLive, setIsLive] = useState(1);
     //create variable to stored productid using hook 
     let { productid } = useParams();
+    verifyLogin();
     //navigator object
     let navigator = useNavigate();
     let fetchCategory = function () {

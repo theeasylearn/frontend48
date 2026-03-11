@@ -1,7 +1,8 @@
 import React from "react";
 import Menu from "./Menu";
-
+import verifyLogin from "./check-login";
 export default function AdminEditCategory() {
+  verifyLogin();
   return (
     <>
       <div id="wrapper">

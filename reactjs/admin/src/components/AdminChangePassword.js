@@ -1,7 +1,9 @@
 import React from "react";
 import Menu from "./Menu";
-
+import verifyLogin from "./check-login";
 export default function AdminChangePassword() {
+    verifyLogin();
+    
     return (
         <>
             <div id="wrapper">
